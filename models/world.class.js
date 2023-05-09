@@ -21,6 +21,8 @@ ctx;
 
 
     draw(){
+        this.ctx.fillStyle = 'rgb(135, 178, 235)';
+        this.ctx.fillRect(0, 0, 720, 480);
         this.ctx.drawImage(this.background_3.img, this.background_3.x, this.background_3.y, this.background_3.width, this.background_3.height);
         this.ctx.drawImage(this.background_2.img, this.background_2.x, this.background_2.y, this.background_2.width, this.background_2.height);
         this.ctx.drawImage(this.background.img, this.background.x, this.background.y, this.background.width, this.background.height);
