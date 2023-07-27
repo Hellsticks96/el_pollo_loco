@@ -9,9 +9,11 @@ backgrounds = [
 
 enemies = [
     new Chicken(),
-    new Chicken(),
-    new Chicken(),
+
 ];
+
+enemyCount = this.enemies.length;
+randomEnemyTimer = Math.floor((Math.random() * 10000) + 5000);
 
 clouds = [
     new Cloud()
@@ -44,8 +46,8 @@ ctx;
         requestAnimationFrame(function(){
             self.draw();
         });
+
     }
-        
         grabAndAdd(array){
             array.forEach(item => {
                 this.addToMap(item);
