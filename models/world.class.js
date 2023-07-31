@@ -9,7 +9,8 @@ backgrounds = [
 
 enemies = [
     new Chicken(),
-
+    new Chicken(),
+    new Chicken()
 ];
 
 enemyCount = this.enemies.length;
