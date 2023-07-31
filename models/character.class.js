@@ -3,6 +3,7 @@ class Character extends MovableObject{
     width = 250;
     y = 200;
     x = 70;
+    world;
     IMAGES_WALKING = 
     ['../img/2_character_pepe/2_walk/W-21.png',
     '../img/2_character_pepe/2_walk/W-22.png',
@@ -10,6 +11,15 @@ class Character extends MovableObject{
     '../img/2_character_pepe/2_walk/W-24.png',
     '../img/2_character_pepe/2_walk/W-25.png',
     '../img/2_character_pepe/2_walk/W-26.png'
+    ];
+
+    IMAGES_WALKING_BACKWARDS = 
+    ['../img/2_character_pepe/2_walk/W-26.png',
+    '../img/2_character_pepe/2_walk/W-25.png',
+    '../img/2_character_pepe/2_walk/W-24.png',
+    '../img/2_character_pepe/2_walk/W-23.png',
+    '../img/2_character_pepe/2_walk/W-22.png',
+    '../img/2_character_pepe/2_walk/W-21.png'
     ];
 
     IMAGES_SHORT_IDLE =
@@ -48,11 +58,22 @@ class Character extends MovableObject{
 
     animate(){
         setInterval( () => {
-            let i = this.currentImage % this.IMAGES_LONG_IDLE.length;
-            let path = this.IMAGES_LONG_IDLE[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 1000 / 6);
+            if (this.world.keyboard.RIGHT) {
+                this.x += 7;
+                let i = this.currentImage % this.IMAGES_WALKING.length;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
+            if (this.world.keyboard.LEFT) {
+                this.x -= 7;
+                let i = this.currentImage % this.IMAGES_WALKING_BACKWARDS.length;
+                let path = this.IMAGES_WALKING_BACKWARDS[i];
+                this.img = this.imageCache[path];
+                this.currentImage++
+            }
+           
+        }, 1000 / 12);
     }
 
     jump(){

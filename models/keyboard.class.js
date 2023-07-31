@@ -1,5 +1,5 @@
-class keyboardObject {
-    ArrowLeft;
+class keyboard {
+    LEFT;
     RIGHT;
     UP;
     DOWN;
