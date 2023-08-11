@@ -8,6 +8,21 @@ class MovableObject {
     currentImage = 0;
     speed = (Math.random() * 0.6) + 0.2;
     otherDirection = false;
+    speedY = 0;
+    acceleration = 2.5;
+
+    applyGravity(){
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
+    isAboveGround(){
+        return this.y < 180;
+    }
 
     loadImage(path){
         this.img = new Image();
@@ -22,6 +37,20 @@ class MovableObject {
         });
     }
 
+    draw(ctx){
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawHitbox(ctx){
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
     playAnimation(images){
             let i = this.currentImage % images.length;
             let path = images[i];
@@ -30,12 +59,18 @@ class MovableObject {
     }
 
     moveRight(){
-        console.log('Moving right');
+        this.x += 7; 
     }
 
-    moveLeft(){
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+    moveLeft(speed){
+        if (speed) {
+            this.x -= speed;
+        }else {
+            this.x -= 7;
+        }
+    }
+
+    jump(){
+        this.speedY = 30;
     }
 }
