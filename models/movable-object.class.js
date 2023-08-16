@@ -10,6 +10,8 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    energy = 100;
+    isDead = false;
 
     applyGravity(){
         setInterval(() => {
@@ -57,7 +59,20 @@ class MovableObject {
                 this.x < obj.x &&
                 this.y < obj.y + obj.height
 
-}
+    }
+
+    checkDeath(){
+        if (this.energy <= 0) {
+            this.isDead = true;
+        }
+    }
+
+    hit(hitStrength){
+        this.energy -= hitStrength;
+        if (this.energy <= 0) {
+            this.energy = 0;
+        }
+    }
 
     playAnimation(images){
             let i = this.currentImage % images.length;

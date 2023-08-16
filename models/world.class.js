@@ -18,17 +18,28 @@ camera_x = 0;
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.checkAliveStatus();
     }
 
     setWorld(){
         this.character.world = this;
     }
 
+    checkAliveStatus(){
+        this.character.checkDeath()
+        if (this.character.isDead) {
+           this.character.playAnimation(this.character.IMAGES_DEATH);
+        }
+    }
+
     checkCollisions(){
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                     console.log('collision with' , enemy);
+                     this.character.hit(5);
+                     this.character.playAnimation(this.character.IMAGES_HURT);
+                     console.log(this.character.energy);
+                     this.checkAliveStatus();
                 };
             });
         }, 100);
