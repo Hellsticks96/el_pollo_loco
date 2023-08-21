@@ -11,8 +11,6 @@ let KEYS_TO_CHECK = [
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-
-    console.log('my char is', world);
 }
 
 window.addEventListener('keydown', (e) => {

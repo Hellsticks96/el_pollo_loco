@@ -9,6 +9,10 @@ ctx;
 
 keyboard;
 
+statusbar_health = new Statusbar();
+
+throwableObject = [new ThrowableObject()];
+
 camera_x = 0;
 
     constructor(canvas, keyboard){
@@ -28,7 +32,7 @@ camera_x = 0;
     checkAliveStatus(){
         this.character.checkDeath()
         if (this.character.isDead) {
-           this.character.playAnimation(this.character.IMAGES_DEATH);
+
         }
     }
 
@@ -37,10 +41,14 @@ camera_x = 0;
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                      this.character.hit(5);
-                     this.character.playAnimation(this.character.IMAGES_HURT);
-                     console.log(this.character.energy);
+                     this.statusbar_health.setPercentage(this.character.energy);
                      this.checkAliveStatus();
                 };
+                if (this.keyboard.SPACE) {
+                    console.log('wurf');
+                    let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
+                    this.throwableObject.push(bottle);
+                }
             });
         }, 100);
     }
@@ -53,8 +61,17 @@ camera_x = 0;
         this.ctx.translate(this.camera_x, 0);
 
         this.grabAndAdd(this.level.backgrounds);
+
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar_health);
+        this.ctx.translate(this.camera_x, 0);
+        
+
         
         this.grabAndAdd(this.level.enemies);
+
+        this.grabAndAdd(this.throwableObject);
 
         this.grabAndAdd(this.level.clouds);
 
