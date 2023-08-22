@@ -1,8 +1,8 @@
 class Statusbar extends DrawableObject {
     y = 0;
-    x = 100;
-    height = 100;
-    width = 400;
+    x = 10;
+    height = 80;
+    width = 350;
     percentage = 100;
 
     IMAGES_HEALTH = [
@@ -14,10 +14,43 @@ class Statusbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png'
     ];
 
-    constructor(){
+    IMAGES_COIN = [
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png',
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png',
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png',
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png',
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png',
+        'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png'
+    ];
+
+    IMAGES_BOTTLE = [
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png',
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png',
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png',
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png',
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png',
+        'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
+    ];
+
+
+    constructor(images_indicator){
         super();
-        this.loadImages(this.IMAGES_HEALTH);
-        this.setPercentage(this.energy);
+        this.loadImages(this.pickArrayToLoad(images_indicator));
+    }
+
+    pickArrayToLoad(images_indicator){
+        if (images_indicator == 'health') {
+            this.loadImage('img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png');
+            return this.IMAGES_HEALTH;
+        } else if (images_indicator == 'coin') {
+            this.y += 60;
+            this.loadImage('img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png');
+            return this.IMAGES_COIN;
+        } else if (images_indicator == 'bottle') {
+            this.y += 120
+            this.loadImage('img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png');
+            return this.IMAGES_BOTTLE;
+        };
     }
     
 

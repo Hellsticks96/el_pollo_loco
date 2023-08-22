@@ -9,9 +9,16 @@ ctx;
 
 keyboard;
 
-statusbar_health = new Statusbar();
+background_music = new Audio('audio/background_music.mp3');
+
+statusbar_health = new Statusbar('health');
+statusbar_coin = new Statusbar('coin');
+statusbar_bottle = new Statusbar('bottle');
 
 throwableObject = [new ThrowableObject()];
+
+coin_collectable = [new CollectableObject('img/8_coin/coin_1.png', 700, 200, 120, 120)];
+bottle_collectable = [new CollectableObject('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 700, 525, 120, 80)];
 
 camera_x = 0;
 
@@ -38,6 +45,7 @@ camera_x = 0;
 
     checkCollisions(){
         setInterval(() => {
+            this.background_music.play()
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                      this.character.hit(5);
@@ -45,7 +53,6 @@ camera_x = 0;
                      this.checkAliveStatus();
                 };
                 if (this.keyboard.SPACE) {
-                    console.log('wurf');
                     let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
                     this.throwableObject.push(bottle);
                 }
@@ -61,19 +68,21 @@ camera_x = 0;
         this.ctx.translate(this.camera_x, 0);
 
         this.grabAndAdd(this.level.backgrounds);
-
-
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar_health);
-        this.ctx.translate(this.camera_x, 0);
-        
-
         
         this.grabAndAdd(this.level.enemies);
 
         this.grabAndAdd(this.throwableObject);
 
+        this.grabAndAdd(this.coin_collectable);
+        this.grabAndAdd(this.bottle_collectable);
+
         this.grabAndAdd(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar_health);
+        this.addToMap(this.statusbar_coin);
+        this.addToMap(this.statusbar_bottle);
+        this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
 

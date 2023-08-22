@@ -1,5 +1,6 @@
 let canvas;
 let world;
+let background_music = new Audio('audio/background_music.mp3');
 let KEYS_TO_CHECK = [
     39,
     37,
@@ -11,6 +12,10 @@ let KEYS_TO_CHECK = [
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+}
+
+function playMusic(){
+    background_music.play();
 }
 
 window.addEventListener('keydown', (e) => {

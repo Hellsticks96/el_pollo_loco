@@ -25,11 +25,18 @@ class DrawableObject {
     }
 
     drawHitbox(ctx){
-        if (this instanceof Character || this instanceof Chicken) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject) {
             ctx.beginPath();
-            ctx.lineWidth = '5';
+            ctx.lineWidth = '2';
             ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            if (this instanceof Character) {
+                ctx.rect(this.x + 40, this.y + 130, this.width -100, this.height -150);
+            } else if (this instanceof CollectableObject) {
+                ctx.rect(this.x + 20, this.y + 15, this.width -30, this.height -30);
+            } else {
+                ctx.rect(this.x, this.y, this.width, this.height);
+            }
+            
             ctx.stroke();
         }
     }
