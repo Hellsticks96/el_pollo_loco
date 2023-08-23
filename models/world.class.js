@@ -9,7 +9,7 @@ ctx;
 
 keyboard;
 
-background_music = new Audio('audio/background_music.mp3');
+
 
 statusbar_health = new Statusbar('health');
 statusbar_coin = new Statusbar('coin');
@@ -19,6 +19,8 @@ throwableObject = [new ThrowableObject()];
 
 coin_collectable = [new CollectableObject('img/8_coin/coin_1.png', 700, 200, 120, 120)];
 bottle_collectable = [new CollectableObject('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 700, 525, 120, 80)];
+character_coin_stash = 0;
+character_bottle_stash = 0;
 
 camera_x = 0;
 
@@ -28,8 +30,10 @@ camera_x = 0;
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
         this.checkAliveStatus();
+
+
     }
 
     setWorld(){
@@ -43,21 +47,52 @@ camera_x = 0;
         }
     }
 
-    checkCollisions(){
+    run(){
         setInterval(() => {
-            this.background_music.play()
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                     this.character.hit(5);
-                     this.statusbar_health.setPercentage(this.character.energy);
-                     this.checkAliveStatus();
-                };
-                if (this.keyboard.SPACE) {
-                    let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
-                    this.throwableObject.push(bottle);
-                }
-            });
+                this.checkCharacterEnemyCollisions();
+                this.checkCharacterCollectableCollisions('coin');
+                this.checkCharacterCollectableCollisions('bottle');
+                this.checkBottleThrow();
         }, 100);
+    }
+
+    checkCharacterEnemyCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                 this.character.hit(5);
+                 this.statusbar_health.setPercentage(this.character.energy);
+                 this.checkAliveStatus();
+            };
+            });
+    }
+
+    checkCharacterCollectableCollisions(collectable_stash){
+        if (collectable_stash == 'coin') {
+            this.coin_collectable.forEach((coin) => {
+                if (this.character.isColliding(coin)) {
+                    this.character_coin_stash++;
+                    this.coin_collectable.splice(0, 1);
+                    console.log(this.character_coin_stash);
+                }
+            })
+        } else if (collectable_stash ==  'bottle') {
+            this.bottle_collectable.forEach((bottle) => {
+                if (this.character.isColliding(bottle)) {
+                    this.character_bottle_stash++;
+                    this.bottle_collectable.splice(0, 1);
+                    console.log(this.character_bottle_stash);
+                }
+            })
+        }
+        
+    }
+
+
+    checkBottleThrow(){
+        if (this.keyboard.SPACE) {
+            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
+            this.throwableObject.push(bottle);
+        }
     }
 
 

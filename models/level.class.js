@@ -9,11 +9,10 @@ class Level {
     coin_collectable;
     level_end_x = 1070*3;
 
-    constructor(enemies, clouds, backgrounds, statusbar_health){
+    constructor(enemies, clouds, backgrounds){
         this.enemies = enemies;
         this.clouds = clouds;
         this.backgrounds = backgrounds;
-        this.statusbar_health = statusbar_health;
     }
 
 }
