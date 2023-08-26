@@ -8,3 +8,12 @@ body {
 canvas {
     background-color: black;
 }
+
+.startscreen {
+    height: 720px;
+    width: 1080px;
+}
+
+.hide{
+    display: none;
+}

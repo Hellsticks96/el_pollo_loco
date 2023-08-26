@@ -9,6 +9,9 @@ ctx;
 
 keyboard;
 
+random_spawn_timer = Math.floor((Math.random() * 8) + 3);
+basic_timer = 0;
+
 
 
 statusbar_health = new Statusbar('health');
@@ -36,8 +39,8 @@ camera_x = 0;
         this.setWorld();
         this.run();
         this.checkAliveStatus();
-
-
+        this.runBasicTimer();
+        this.randomlySpawnEnemy();
     }
 
     setWorld(){
@@ -51,13 +54,35 @@ camera_x = 0;
         }
     }
 
+    
+
     run(){
         setInterval(() => {
                 this.checkCharacterEnemyCollisions();
                 this.checkCharacterCollectableCollisions('coin');
                 this.checkCharacterCollectableCollisions('bottle');
                 this.checkBottleThrow();
+                
         }, 100);
+    }
+
+    randomlySpawnEnemy(){
+        
+            setInterval(() => {
+                if (this.level.enemies.length < 3) {
+                this.level.enemies.push(new Chicken(this.character.x + 400));
+            }
+            }, (this.random_spawn_timer * 1000) + this.basic_timer);
+        
+        
+
+    }
+
+    runBasicTimer(){
+        setInterval(() => {
+            this.basic_timer++;
+            console.log(this.basic_timer);
+        }, 1000);
     }
 
     checkCharacterEnemyCollisions(){
@@ -72,32 +97,53 @@ camera_x = 0;
 
     checkCharacterCollectableCollisions(collectable_stash){
         if (collectable_stash == 'coin') {
-            this.coin_collectable.forEach((coin) => {
-                if (this.character.isColliding(coin)) {
+            this.checkCoinPickup();
+        } else if (collectable_stash ==  'bottle') {
+            this.checkBottlePickup();
+        }
+        
+    }
+
+    checkCoinPickup(){
+        this.coin_collectable.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                if (this.character_coin_stash < 100) {
                     this.character_coin_stash += 10;
                     this.statusbar_coin.setPercentage(this.character_coin_stash, this.statusbar_coin.IMAGES_COIN);
                     this.coin_collectable.splice(0, 1);
-                    console.log(this.character_coin_stash);
-                }
-            })
-        } else if (collectable_stash ==  'bottle') {
-            this.bottle_collectable.forEach((bottle) => {
-                if (this.character.isColliding(bottle)) {
+                } else {
+                    this.character_coin_stash = 100;
+                    this.statusbar_coin.setPercentage(this.character_coin_stash, this.statusbar_coin.IMAGES_COIN);
+                }               
+            }
+        })
+    }
+
+    checkBottlePickup(){
+        this.bottle_collectable.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                if (this.character_bottle_stash < 100) {
                     this.character_bottle_stash += 10;
                     this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
                     this.bottle_collectable.splice(0, 1);
-                    console.log(this.character_bottle_stash);
-                }
-            })
-        }
-        
+                } else {
+                    this.character_bottle_stash = 100;
+                    this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
+                }      
+            }
+        })
     }
 
 
     checkBottleThrow(){
         if (this.keyboard.SPACE) {
             let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
-            this.throwableObject.push(bottle);
+            if (this.character_bottle_stash >= 10) {
+                this.throwableObject.push(bottle);
+                this.character_bottle_stash -= 10;
+                this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
+            }
+            
         }
     }
 

@@ -1,5 +1,7 @@
+
 let canvas;
 let world;
+let startScreen;
 let background_music = new Audio('audio/background_music.mp3');
 let KEYS_TO_CHECK = [
     39,
@@ -11,11 +13,13 @@ let KEYS_TO_CHECK = [
 
 function init(){
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
 }
 
-function playMusic(){
-    background_music.play();
+function startGame(){
+    world = new World(canvas, keyboard);
+    document.getElementById('start-end-img').classList.add('hide');
+    document.getElementById('canvas').classList.remove('hide');
+    //background_music.play();
 }
 
 window.addEventListener('keydown', (e) => {
