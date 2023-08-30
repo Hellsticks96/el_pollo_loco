@@ -7,7 +7,7 @@ class Level {
     statusbar_coin;
     bottle_collectable;
     coin_collectable;
-    level_end_x = 1070*3;
+    level_end_x = 1079*3;
 
     constructor(enemies, clouds, backgrounds){
         this.enemies = enemies;

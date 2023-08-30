@@ -138,11 +138,9 @@ class Character extends MovableObject{
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {
             
                 this.idleTimer++;
-                console.log(this.idleTimer)
-            
+       
         } else {
             this.idleTimer = 0;
-            console.log(this.idleTimer)
         }
     }, 1000)
     }

@@ -9,6 +9,8 @@ ctx;
 
 keyboard;
 
+endboss_count = 0;
+
 random_spawn_timer = Math.floor((Math.random() * 8) + 3);
 basic_timer = 0;
 
@@ -63,6 +65,7 @@ camera_x = 0;
                 this.checkCharacterCollectableCollisions('bottle');
                 this.checkBottleThrow();
                 this.checkBottleCollision();
+                this.checkEndbossSpawn();
         }, 100);
     }
 
@@ -91,10 +94,23 @@ camera_x = 0;
                     if (thrownBottle.isColliding(enemy)) {
                         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH);
                         enemy.playAnimation(enemy.IMAGES_DYING);
+                        this.deleteHitEnemy(enemy);               
                     };
                 };
             });
-        }    
+        }
+
+
+    deleteHitEnemy(obj){
+        setTimeout(() => {
+                    this.level.enemies.splice(this.getEnemyIndex(obj), 1);
+        }, 1500); 
+    }
+        
+    getEnemyIndex(obj){
+        let index = this.level.enemies.indexOf(obj);
+        return index;
+    }
 
     
     checkCharacterEnemyCollisions(){
@@ -157,6 +173,14 @@ camera_x = 0;
             }
         }
         
+    }
+
+    checkEndbossSpawn(){
+        let endboss = new Endboss();
+        if (this.character.x > 2000 && this.endboss_count < 1) {
+            this.level.enemies.push(endboss);
+            this.endboss_count++;
+        }
     }
 
 

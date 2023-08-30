@@ -32,7 +32,7 @@ class DrawableObject {
     }
 
     drawHitbox(ctx){
-        if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject || this instanceof ThrowableObject) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject || this instanceof ThrowableObject || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'blue';
