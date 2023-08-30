@@ -18,7 +18,7 @@ statusbar_health = new Statusbar('health');
 statusbar_coin = new Statusbar('coin');
 statusbar_bottle = new Statusbar('bottle');
 
-throwableObject = [new ThrowableObject()];
+throwableObject = [];
 
 coin_collectable = [new CollectableObject('img/8_coin/coin_1.png', 700, 200, 120, 120),
 new CollectableObject('img/8_coin/coin_1.png', 1500, 200, 120, 120),
@@ -27,7 +27,7 @@ bottle_collectable = [new CollectableObject('img/6_salsa_bottle/1_salsa_bottle_o
 new CollectableObject('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1200, 525, 120, 80),
 ];
 character_coin_stash = 0;
-character_bottle_stash = 0;
+character_bottle_stash = 100;
 
 camera_x = 0;
 
@@ -62,7 +62,7 @@ camera_x = 0;
                 this.checkCharacterCollectableCollisions('coin');
                 this.checkCharacterCollectableCollisions('bottle');
                 this.checkBottleThrow();
-                
+                this.checkBottleCollision();
         }, 100);
     }
 
@@ -81,10 +81,22 @@ camera_x = 0;
     runBasicTimer(){
         setInterval(() => {
             this.basic_timer++;
-            console.log(this.basic_timer);
         }, 1000);
     }
 
+    checkBottleCollision(){
+            this.level.enemies.forEach((enemy) => {
+                for (let i = 0; i < this.throwableObject.length; i++) {
+                    const thrownBottle = this.throwableObject[i];
+                    if (thrownBottle.isColliding(enemy)) {
+                        thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH);
+                        enemy.playAnimation(enemy.IMAGES_DYING);
+                    };
+                };
+            });
+        }    
+
+    
     checkCharacterEnemyCollisions(){
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
@@ -143,8 +155,8 @@ camera_x = 0;
                 this.character_bottle_stash -= 10;
                 this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
             }
-            
         }
+        
     }
 
 

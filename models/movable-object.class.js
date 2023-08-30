@@ -36,6 +36,7 @@ class MovableObject extends DrawableObject {
         this.energy -= hitStrength;
         if (this.energy <= 0) {
             this.energy = 0;
+            this.checkDeath();
         } else {
             this.lastHurt = new Date().getTime();
         }
