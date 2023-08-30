@@ -3,13 +3,13 @@ class Endboss extends MovableObject {
     width = 300;
     y = 260;
     x; 
+    statusbar_health_endboss = 'img/7_statusbars/2_statusbar_endboss/orange.png';
 
     ENDBOSS_WALKING = [
         '../img/4_enemie_boss_chicken/1_walk/G1.png',
         '../img/4_enemie_boss_chicken/1_walk/G2.png',
         '../img/4_enemie_boss_chicken/1_walk/G3.png',
-        '../img/4_enemie_boss_chicken/1_walk/G4.png'
-        
+        '../img/4_enemie_boss_chicken/1_walk/G4.png'  
     ];
 
     ENDBOSS_ALERTED = [
@@ -59,8 +59,16 @@ class Endboss extends MovableObject {
 
     animate(){
         setInterval(() => {
-            this.playAnimation(this.ENDBOSS_WALKING);
-            this.moveLeft(10);
+            if (this.isHurt()) {
+                this.playAnimation(this.ENDBOSS_HURT);
+            } else if (this.isDead) {
+                this.speedY = 10;
+                this.applyGravity();
+                this.playAnimation(this.ENDBOSS_DEATH);
+            } else {
+                this.playAnimation(this.ENDBOSS_WALKING);
+                this.moveLeft(10);
+            }         
         }, 1000 / 10)
     }
 

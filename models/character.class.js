@@ -105,6 +105,7 @@ class Character extends MovableObject{
         setInterval( () => {
             
             if (this.isDead) {
+                this.speedY = 15;
                 this.playAnimation(this.IMAGES_DEATH);
             } else if(this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);

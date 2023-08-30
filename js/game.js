@@ -17,7 +17,7 @@ function init(){
 
 function startGame(){
     world = new World(canvas, keyboard);
-    document.getElementById('start-end-img').classList.add('hide');
+    document.getElementById('start-img').classList.add('hide');
     document.getElementById('canvas').classList.remove('hide');
     //background_music.play();
 }

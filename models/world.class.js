@@ -1,6 +1,8 @@
 class World{
 character = new Character();
 
+
+
 level = level1;
 
 canvas;
@@ -66,7 +68,21 @@ camera_x = 0;
                 this.checkBottleThrow();
                 this.checkBottleCollision();
                 this.checkEndbossSpawn();
+                this.checkEndcard();
         }, 100);
+    }
+
+    checkEndcard(){ 
+        if (this.character.isDead) {
+            setTimeout(() => {
+                this.level.endcard.push(new Background('img/9_intro_outro_screens/game_over/oh no you lost!.png', this.character.x -100, 0));
+            }, 3000);
+        }
+        if (this.level.endboss.length > 0 && this.level.endboss[0].isDead) {
+            setTimeout(() => {
+                this.level.endcard.push(new Background('img/9_intro_outro_screens/game_over/game over!.png', this.character.x -100, 0));
+            }, 3000);
+        }
     }
 
     randomlySpawnEnemy(){
@@ -91,6 +107,7 @@ camera_x = 0;
             this.level.enemies.forEach((enemy) => {
                 for (let i = 0; i < this.throwableObject.length; i++) {
                     const thrownBottle = this.throwableObject[i];
+                    
                     if (thrownBottle.isColliding(enemy)) {
                         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH);
                         enemy.playAnimation(enemy.IMAGES_DYING);
@@ -98,6 +115,13 @@ camera_x = 0;
                     };
                 };
             });
+            for (let i = 0; i < this.throwableObject.length; i++) {
+                const thrownBottle = this.throwableObject[i];
+                if (thrownBottle.isColliding(this.level.endboss[0])) {
+                    thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH);
+                    this.level.endboss[0].hit(10);
+                }
+            }
         }
 
 
@@ -178,7 +202,7 @@ camera_x = 0;
     checkEndbossSpawn(){
         let endboss = new Endboss();
         if (this.character.x > 2000 && this.endboss_count < 1) {
-            this.level.enemies.push(endboss);
+            this.level.endboss.push(endboss);
             this.endboss_count++;
         }
     }
@@ -193,6 +217,7 @@ camera_x = 0;
         this.grabAndAdd(this.level.backgrounds);
         
         this.grabAndAdd(this.level.enemies);
+        this.grabAndAdd(this.level.endboss);
 
         this.grabAndAdd(this.throwableObject);
 
@@ -208,6 +233,10 @@ camera_x = 0;
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
+
+        if (this.level.endcard.length > 0) {
+            this.grabAndAdd(this.level.endcard);
+        }
 
         this.ctx.translate(-this.camera_x, 0);
 

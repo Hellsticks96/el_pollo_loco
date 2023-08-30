@@ -1,18 +1,17 @@
 class Level {
     enemies;
+    endboss;
     clouds;
     backgrounds;
-    statusbar_health;
-    statusbar_bottle;
-    statusbar_coin;
-    bottle_collectable;
-    coin_collectable;
+    endcard
     level_end_x = 1079*3;
 
-    constructor(enemies, clouds, backgrounds){
+    constructor(enemies, endboss, clouds, backgrounds, endcard){
         this.enemies = enemies;
+        this.endboss = endboss
         this.clouds = clouds;
         this.backgrounds = backgrounds;
+        this.endcard = endcard;
     }
 
 }
