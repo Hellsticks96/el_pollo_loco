@@ -6,6 +6,13 @@ class DrawableObject {
     width = 100;
     imageCache = {};
     currentImage = 0;
+    splashImage= 0;
+    offset = {
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0
+    }
 
     loadImage(path){
         this.img = new Image();
@@ -20,11 +27,21 @@ class DrawableObject {
         });
     }
 
-    playAnimation(images){
-        let i = this.currentImage % images.length;
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+    playAnimation(images, splashCheck){
+        if (splashCheck) {
+            if (this.splashImage <= images.length) {
+                let i = this.currentImage % images.length;
+                let path = images[i];
+                this.img = this.imageCache[path];
+                this.splashImage++; 
+            };  
+        } else {
+            let i = this.currentImage % images.length;
+                let path = images[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+        }
+          
     }
 
     draw(ctx){
@@ -35,7 +52,7 @@ class DrawableObject {
         if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject || this instanceof ThrowableObject || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '1';
-            ctx.strokeStyle = 'blue';
+            ctx.strokeStyle = '#000';
            
                 ctx.rect(this.x, this.y, this.width, this.height);
             
@@ -45,10 +62,18 @@ class DrawableObject {
     }
 
     isColliding (obj) {
-        return  this.x + this.width > obj.x &&
-                this.y + this.height > obj.y &&
-                this.x < obj.x &&
-                this.y < obj.y + obj.height
+        if (obj instanceof CollectableObject) {
+            return  this.x + this.width - this.offset.right > obj.x &&
+            this.y + this.height - this.offset.bottom > obj.y &&
+            this.x + this.offset.left < obj.x &&
+            this.y + this.offset.top < obj.y + obj.height
 
+        } else {
+            return  this.x + this.width > obj.x &&
+            this.y + this.height > obj.y &&
+            this.x < obj.x &&
+            this.y < obj.y + obj.height
+        }
+        
     }
 }

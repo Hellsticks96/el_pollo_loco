@@ -1,5 +1,8 @@
 class ThrowableObject extends MovableObject{
-    
+    throwMovementX;
+    animation_BottleRotation;
+
+
     IMAGES_BOTTLE_SPINNING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -32,13 +35,13 @@ class ThrowableObject extends MovableObject{
     throw(){ 
         this.speedY = 30;
         this.applyGravity();
-        setInterval(() => {
+        this.throwMovementX = setInterval(() => {
             this.x += 8;
         }, 1000 / 60);
     }
 
     animate(){
-        setInterval(() => {
+        this.animation_BottleRotation = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPINNING);
         }, 1000 / 10);
     }

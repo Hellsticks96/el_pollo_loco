@@ -1,5 +1,6 @@
 class MovableObject extends DrawableObject {
     speed = (Math.random() * 0.6) + 0.2;
+    gravity;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
@@ -8,7 +9,7 @@ class MovableObject extends DrawableObject {
     lastHurt = 0;
 
     applyGravity(){
-        setInterval(() => {
+        this.gravity = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;

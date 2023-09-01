@@ -6,6 +6,12 @@ class Character extends MovableObject{
     world;
     idleTimer = 0;
     walking_sound = new Audio('audio/walking.mp3');
+    offset = {
+        top: 200,
+        bottom: 0,
+        right: 50,
+        left: 40
+    }
     IMAGES_WALKING = 
     ['../img/2_character_pepe/2_walk/W-21.png',
     '../img/2_character_pepe/2_walk/W-22.png',
