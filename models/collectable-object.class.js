@@ -1,5 +1,8 @@
 class CollectableObject extends DrawableObject {
 
+    coin_collection_sound = new Audio('audio/coin_collection.mp3');
+    bottle_collection_sound = new Audio('audio/bottle_collection.mp3');
+
     offset = {
         top: 30,
         bottom: 30,

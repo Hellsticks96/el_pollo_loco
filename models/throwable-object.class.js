@@ -1,6 +1,8 @@
 class ThrowableObject extends MovableObject{
     throwMovementX;
     animation_BottleRotation;
+    throw_bottle_sound = new Audio('audio/throw_bottle.mp3');
+    bottle_breaking_sound = new Audio('audio/bottle_breaking.mp3');
 
 
     IMAGES_BOTTLE_SPINNING = [
@@ -33,6 +35,7 @@ class ThrowableObject extends MovableObject{
 
 
     throw(){ 
+        this.throw_bottle_sound.play();
         this.speedY = 30;
         this.applyGravity();
         this.throwMovementX = setInterval(() => {

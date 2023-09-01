@@ -100,6 +100,7 @@ camera_x = 0;
                     const thrownBottle = this.throwableObject[i];
                     
                     if (thrownBottle.isColliding(enemy)) {
+                        thrownBottle.bottle_breaking_sound.play();
                         clearInterval(thrownBottle.throwMovementX);
                         clearInterval(thrownBottle.animation_BottleRotation);
                         clearInterval(thrownBottle.gravity);
@@ -114,6 +115,7 @@ camera_x = 0;
                 for (let i = 0; i < this.throwableObject.length; i++) {
                     const thrownBottle = this.throwableObject[i];
                     if (thrownBottle.isColliding(this.level.endboss[0])) {
+                        thrownBottle.bottle_breaking_sound.play();
                         clearInterval(thrownBottle.throwMovementX);
                         clearInterval(thrownBottle.animation_BottleRotation);
                         clearInterval(thrownBottle.gravity);
@@ -167,6 +169,7 @@ camera_x = 0;
         this.coin_collectable.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 if (this.character_coin_stash < 100) {
+                    coin.coin_collection_sound.play();
                     this.character_coin_stash += 10;
                     this.statusbar_coin.setPercentage(this.character_coin_stash, this.statusbar_coin.IMAGES_COIN);
                     this.coin_collectable.splice(this.coin_collectable.findIndex(x => x.x === coin.x), 1);
@@ -182,6 +185,7 @@ camera_x = 0;
         this.bottle_collectable.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 if (this.character_bottle_stash < 100) {
+                    bottle.bottle_collection_sound.play();
                     this.character_bottle_stash += 10;
                     this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
                     this.bottle_collectable.splice(this.bottle_collectable.findIndex(x => x.x === bottle.x), 1);
@@ -267,7 +271,7 @@ camera_x = 0;
 
             mo.draw(this.ctx);
 
-            mo.drawHitbox(this.ctx);
+           // mo.drawHitbox(this.ctx);
 
             if (mo.otherDirection) {
                 this.resetImage(mo);
