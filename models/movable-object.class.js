@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     isDead = false;
     lastHurt = 0;
+    stopImageLoop = true;
 
     applyGravity(){
         this.gravity = setInterval(() => {

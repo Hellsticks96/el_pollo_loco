@@ -15,6 +15,8 @@ endboss_count = 0;
 
 random_spawn_timer = Math.floor((Math.random() * 8) + 3);
 basic_timer = 0;
+timeNow;
+stopImageLoop = true;
 
 
 
@@ -43,7 +45,7 @@ camera_x = 0;
         this.setWorld();
         this.run();
         this.runBasicTimer();
-        //this.randomlySpawnEnemy();
+        this.randomlySpawnEnemy();
     }
 
     setWorld(){
@@ -94,7 +96,6 @@ camera_x = 0;
     }
 
     checkBottleCollision(){
-        let splashCheck = true;
             this.level.enemies.forEach((enemy) => {
                 for (let i = 0; i < this.throwableObject.length; i++) {
                     const thrownBottle = this.throwableObject[i];
@@ -103,25 +104,25 @@ camera_x = 0;
                         thrownBottle.bottle_breaking_sound.play();
                         clearInterval(thrownBottle.throwMovementX);
                         clearInterval(thrownBottle.animation_BottleRotation);
-                        clearInterval(thrownBottle.gravity);
-                        thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, splashCheck);
-                        thrownBottle.applyGravity();
+                        thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
+
                         enemy.playAnimation(enemy.IMAGES_DYING);
                         this.deleteHitEnemy(enemy);               
                     };
                 };
             });
-            if (this.level.endboss.length > 0) {
+            if (this.level.endboss.length > 0 && !this.level.endboss[0].isHurt()) {
                 for (let i = 0; i < this.throwableObject.length; i++) {
                     const thrownBottle = this.throwableObject[i];
                     if (thrownBottle.isColliding(this.level.endboss[0])) {
                         thrownBottle.bottle_breaking_sound.play();
+                        this.level.endboss[0].audio_hit.play()
                         clearInterval(thrownBottle.throwMovementX);
                         clearInterval(thrownBottle.animation_BottleRotation);
-                        clearInterval(thrownBottle.gravity);
-                        thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, splashCheck);
-                        thrownBottle.applyGravity();
+                        thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
+
                         this.level.endboss[0].hit(10);
+                        console.log(this.level.endboss[0].energy);
                     }
                 }
             }
@@ -130,6 +131,7 @@ camera_x = 0;
 
 
     deleteHitEnemy(obj){
+        obj.audio_death.play();
         setTimeout(() => {
                     this.level.enemies.splice(this.getEnemyIndex(obj), 1);
         }, 1500); 
@@ -199,16 +201,32 @@ camera_x = 0;
 
 
     checkBottleThrow(){
-        if (this.keyboard.SPACE) {
-            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180); 
-            if (this.character_bottle_stash >= 10) {
-                this.throwableObject.push(bottle);
-                this.character_bottle_stash -= 10;
-                this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
-            }
+        if (this.keyboard.SPACE && this.timeSinceLastCall() && this.character_bottle_stash >= 10) {
+            this.timeNow = new Date().getTime();
+            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180);             
+            this.throwableObject.push(bottle);
+            this.character_bottle_stash -= 10;
+            this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
+            
         }
         
     }
+
+    lastCallTime = null;
+
+    timeSinceLastCall() {
+        const currentTime = new Date();
+        
+        if (this.lastCallTime === null) {
+          this.lastCallTime = currentTime;
+          return 0;
+        }
+      
+        const elapsedTime = (currentTime - this.lastCallTime) / 1000;
+        this.lastCallTime = currentTime;
+      
+        return elapsedTime > 0.05;
+      }
 
     checkEndbossSpawn(){
         let endboss = new Endboss();

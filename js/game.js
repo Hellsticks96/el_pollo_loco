@@ -19,6 +19,7 @@ function startGame(){
     world = new World(canvas, keyboard);
     document.getElementById('start-img').classList.add('hide');
     document.getElementById('canvas').classList.remove('hide');
+    document.getElementById('start_game_btn').classList.add('hide');
     bindBtnPressEvents();
     //background_music.play();
 }
@@ -52,11 +53,13 @@ function bindBtnPressEvents(){
     document.getElementById('shoot_Mobile').addEventListener('touchstart', (e) =>{
         e.preventDefault();
         keyboard.SPACE = true;
+        keyboard.stopMultipleThrows = false;
     });
 
     document.getElementById('shoot_Mobile').addEventListener('touchend', (e) =>{
         e.preventDefault();
         keyboard.SPACE = false;
+        keyboard.stopMultipleThrows = true;
     });
     
     document.getElementById('jump_Mobile').addEventListener('touchstart', (e) =>{

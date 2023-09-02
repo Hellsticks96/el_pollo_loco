@@ -6,7 +6,7 @@ class DrawableObject {
     width = 100;
     imageCache = {};
     currentImage = 0;
-    splashImage= 0;
+    stopImageLoop= 0;
     offset = {
         top: 0,
         bottom: 0,
@@ -27,9 +27,9 @@ class DrawableObject {
         });
     }
 
-    playAnimation(images, splashCheck){
-        if (splashCheck) {
-            if (this.splashImage <= images.length) {
+    playAnimation(images, stopImageLoop){
+        if (stopImageLoop) {
+            if (this.stopImageLoop <= images.length) {
                 let i = this.currentImage % images.length;
                 let path = images[i];
                 this.img = this.imageCache[path];

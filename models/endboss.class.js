@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     y = 260;
     x; 
     statusbar_health_endboss = 'img/7_statusbars/2_statusbar_endboss/orange.png';
+    audio_hit = new Audio('audio/chicken_death.mp3');
 
     ENDBOSS_WALKING = [
         '../img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -64,7 +65,7 @@ class Endboss extends MovableObject {
             } else if (this.isDead) {
                 this.speedY = 10;
                 this.applyGravity();
-                this.playAnimation(this.ENDBOSS_DEATH);
+                this.playAnimation(this.ENDBOSS_DEATH, this.stopImageLoop);
             } else {
                 this.playAnimation(this.ENDBOSS_WALKING);
                 this.moveLeft(10);

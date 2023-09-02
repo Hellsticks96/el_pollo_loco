@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" href="img/6_salsa_bottle/salsa_bottle.png">
     <title>El Pollo Loco</title>
@@ -25,24 +26,23 @@
 </head>
 
 <body onload="init()">
-    <h1>El Pollo Loco</h1>
+    <h1 class="hide-small">El Pollo Loco</h1>
 
     <canvas class="hide" id="canvas" width="1080" height="720" style="overflow-x: hidden;">
 
     </canvas>
-    <div class="mobile-controls">
+    <div class="mobile-controls hide-large">
         <div class="movement-left-right">
-            <button id="moveLeft_Mobile">left</button>
-            <button id="moveRight_Mobile">right</button>
+            <button class="mobile-control-btn" id="moveLeft_Mobile">left</button>
+            <button class="mobile-control-btn" id="moveRight_Mobile">right</button>
         </div>
         <div class="shoot-and-jump">
-            <button id="shoot_Mobile">Shoot</button>
-            <button id="jump_Mobile">jump</button>
+            <button class="mobile-control-btn" id="shoot_Mobile">Shoot</button>
+            <button class="mobile-control-btn" id="jump_Mobile">jump</button>
         </div>    
     </div>
     <img class="startscreen_endscreen" src="img/9_intro_outro_screens/start/startscreen_1.png" id="start-img">
     <img class="startscreen_endscreen hide" src="img/9_intro_outro_screens/game_over/oh no you lost!.png" id="end-lost-img">
-    <img src="" alt="">
-    <button onclick="startGame()">Spiel Starten</button>
+    <button class="start_btn" id="start_game_btn" onclick="startGame()">Spiel Starten</button>
 </body>
 </html>
