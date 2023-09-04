@@ -1,7 +1,7 @@
 class CollectableObject extends DrawableObject {
 
-    coin_collection_sound = new Audio('audio/coin_collection.mp3');
-    bottle_collection_sound = new Audio('audio/bottle_collection.mp3');
+    coin_collection_sound = new Audio('../audio/coin_collection.mp3');
+    bottle_collection_sound = new Audio('../audio/bottle_collection.mp3');
 
     offset = {
         top: 30,
@@ -11,12 +11,12 @@ class CollectableObject extends DrawableObject {
     }
 
     IMAGES_COIN = [
-        'img/8_coin/coin_1.png',
-        'img/8_coin/coin_2.png'
+        '../img/8_coin/coin_1.png',
+        '../img/8_coin/coin_2.png'
     ];
 
     IMAGES_BOTTLE = [
-        'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
+        '../img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
     ];
 
 
@@ -33,7 +33,7 @@ class CollectableObject extends DrawableObject {
 
     animate(img){
         setInterval(() => {
-            if (img == 'img/8_coin/coin_1.png') {
+            if (img == '../img/8_coin/coin_1.png') {
                 this.playAnimation(this.IMAGES_COIN);
             }
         }, 400)

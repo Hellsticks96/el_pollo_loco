@@ -1,7 +1,7 @@
 class Character extends MovableObject{
     height = 450;
     width = 250;
-    y = 200;
+    y = 205;
     x = 200;
     world;
     idleTimer = 0;
@@ -70,9 +70,9 @@ class Character extends MovableObject{
     ];
 
     IMAGES_HURT = [
-        'img/2_character_pepe/4_hurt/H-41.png',
-        'img/2_character_pepe/4_hurt/H-42.png',
-        'img/2_character_pepe/4_hurt/H-43.png'
+        '../img/2_character_pepe/4_hurt/H-41.png',
+        '../img/2_character_pepe/4_hurt/H-42.png',
+        '../img/2_character_pepe/4_hurt/H-43.png'
     ];
 
     constructor(){
