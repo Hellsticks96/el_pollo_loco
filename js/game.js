@@ -3,6 +3,7 @@ let canvas;
 let world;
 let startScreen;
 let endGameInterval;
+let silence = false;
 let endCardWon = new Background('../img/9_intro_outro_screens/game_over/game over!.png', 0, 0);
 let endCardLost = new Background('../img/9_intro_outro_screens/game_over/oh no you lost!.png', 0, 0);
 let background_music = new Audio('audio/background_music.mp3');
@@ -27,29 +28,49 @@ function startGame(){
     document.getElementById('start_game_btn').classList.add('hide');
     bindBtnPressEvents();
     checkGameOver();
-    //background_music.play();
+    checkBackgroundMusic();
+}
+
+function checkMute(){
+    if (silence == false) {
+        silence = true;
+    } else {
+        silence = false;
+    }
+}
+
+function checkBackgroundMusic(){
+    setInterval(() => {
+        if (!silence) {
+            background_music.play();
+        } else {
+            background_music.pause();
+        }
+    }, 100)
 }
 
 function checkGameOver(){
     endGameInterval = setInterval(() => {
         if (world.gameOver == true && world.gameWon == true) {      
             setTimeout(() => {
+                background_music.pause();
                 game_won_sound.play()
                 world.gamePaused = true;
                 const ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 endCardWon.draw(ctx);
-                clearInterval(endGameInterval);
+                clearInterval(endGameInterval)
             }, 1500)           
         };
         if (world.gameOver == true && world.gameLost == true) {      
             setTimeout(() => {
+                background_music.pause();
                 game_lost_sound.play();
                 world.gamePaused = true;
                 const ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 endCardLost.draw(ctx);
-                clearInterval(endGameInterval);
+                clearInterval(endGameInterval)
             }, 1500)           
         };
     }, 100) 
