@@ -44,10 +44,10 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isHurt(){
+    isHurt(hurtTimer){
         let timePassed = new Date().getTime() - this.lastHurt;
         timePassed = timePassed / 1000;
-        return timePassed < 0.5;
+        return timePassed < hurtTimer;
     }
 
 

@@ -1,6 +1,7 @@
 class World{
 character = new Character();
-
+spawnCharacter = true;
+stoppableInterval;
 
 
 level = level1;
@@ -17,6 +18,10 @@ endboss;
 random_spawn_timer = Math.floor((Math.random() * 8) + 3);
 basic_timer = 0;
 timeNow;
+gamePaused = false;
+gameOver = false;
+gameWon = false;
+gameLost = false;
 stopImageLoop = true;
 
 
@@ -43,7 +48,7 @@ camera_x = 0;
         this.setWorld();
         this.run();
         this.runBasicTimer();
-        this.randomlySpawnEnemy();
+        //this.randomlySpawnEnemy();
     }
 
     setWorld(){
@@ -51,7 +56,7 @@ camera_x = 0;
     }  
 
     run(){
-        setInterval(() => {
+        this.stoppableInterval = setInterval(() => {
                 this.checkCharacterEnemyCollisions();
                 this.checkCharacterCollectableCollisions('coin');
                 this.checkCharacterCollectableCollisions('bottle');
@@ -66,25 +71,19 @@ camera_x = 0;
         if (this.character.isDead) {
             setTimeout(() => {
                 this.level.endcard.push(new Background('../img/9_intro_outro_screens/game_over/oh no you lost!.png', this.character.x -100, 0));
+                this.character.stopAllMovements = true;
+                this.gameOver = true;
+                this.gameLost = true;
             }, 3000);
         }
         if (this.level.endboss.length > 0 && this.level.endboss[0].isDead) {
             setTimeout(() => {
                 this.level.endcard.push(new Background('../img/9_intro_outro_screens/game_over/game over!.png', this.character.x -100, 0));
+                this.character.stopAllMovements = true;
+                this.gameOver = true;
+                this.gameWon = true;
             }, 3000);
         }
-    }
-
-    randomlySpawnEnemy(){
-        
-            setInterval(() => {
-                if (this.level.enemies.length < 3) {
-                this.level.enemies.push(new Chicken(this.character.x + 400));
-            }
-            }, (this.random_spawn_timer * 1000) + this.basic_timer);
-        
-        
-
     }
 
     runBasicTimer(){
@@ -108,7 +107,7 @@ camera_x = 0;
                     };
                 };
             });
-            if (this.level.endboss.length > 0 && !this.endboss.isHurt()) {
+            if (this.level.endboss.length > 0 && !this.endboss.isHurt(0.8)) {
                 for (let i = 0; i < this.throwableObject.length; i++) {
                     const thrownBottle = this.throwableObject[i];
                     if (thrownBottle.isColliding(this.endboss)) {
@@ -235,55 +234,64 @@ camera_x = 0;
 
     checkEndbossSpawn(){
         let endboss = new Endboss();
-        let healt_endboss = new Statusbar('endboss');
-        if (this.character.x > 2000 && this.endboss_count < 1) {
+        let health_endboss = new Statusbar('endboss');
+        if (this.character.x > 2100 && this.endboss_count < 1) {
             this.level.endboss.push(endboss);
             this.endboss = this.level.endboss[0];
-            this.statusbar_endboss.push(healt_endboss);  
+            this.statusbar_endboss.push(health_endboss);  
             this.endboss_count++;
+            this.ctx.translate(this.level.endboss[0], 0);
         }
     }
 
 
     draw(){
 
-        this.ctx.fillRect(0, 0, 1080, 720);
+        if (!this.gamePaused) {
+            this.ctx.fillRect(0, 0, 1080, 720);
 
-        this.ctx.translate(this.camera_x, 0);
-
-        this.grabAndAdd(this.level.backgrounds);
-        
-        this.grabAndAdd(this.level.enemies);
-        this.grabAndAdd(this.level.endboss);
-
-        this.grabAndAdd(this.throwableObject);
-
-        this.grabAndAdd(this.coin_collectable);
-        this.grabAndAdd(this.bottle_collectable);
-
-        this.grabAndAdd(this.level.clouds);
-
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar_health);
-        this.addToMap(this.statusbar_coin);
-        this.addToMap(this.statusbar_bottle);
-        if (this.statusbar_endboss.length > 0) {
-            this.addToMap(this.statusbar_endboss[0]);
+            this.ctx.translate(this.camera_x, 0);
+    
+            this.grabAndAdd(this.level.backgrounds);
+            
+            this.grabAndAdd(this.level.enemies);
+            this.grabAndAdd(this.level.endboss);
+    
+            this.grabAndAdd(this.throwableObject);
+    
+            this.grabAndAdd(this.coin_collectable);
+            this.grabAndAdd(this.bottle_collectable);
+    
+            this.grabAndAdd(this.level.clouds);
+    
+            this.ctx.translate(-this.camera_x, 0);
+            this.addToMap(this.statusbar_health);
+            this.addToMap(this.statusbar_coin);
+            this.addToMap(this.statusbar_bottle);
+            if (this.statusbar_endboss.length > 0) {
+                this.addToMap(this.statusbar_endboss[0]);
+            }
+            this.ctx.translate(this.camera_x, 0);
+    
+            if (this.spawnCharacter) {
+                this.addToMap(this.character);
+            }
+            
+    
+            if (this.level.endcard.length > 0) {
+                this.grabAndAdd(this.level.endcard);
+            }
+    
+            this.ctx.translate(-this.camera_x, 0);
+    
+            let self = this;
+            requestAnimationFrame(function(){
+                self.draw();
+            });           
+        } else {
+            
         }
-        this.ctx.translate(this.camera_x, 0);
 
-        this.addToMap(this.character);
-
-        if (this.level.endcard.length > 0) {
-            this.grabAndAdd(this.level.endcard);
-        }
-
-        this.ctx.translate(-this.camera_x, 0);
-
-        let self = this;
-        requestAnimationFrame(function(){
-            self.draw();
-        });
 
     }
 
@@ -300,7 +308,7 @@ camera_x = 0;
 
             mo.draw(this.ctx);
 
-            //mo.drawHitbox(this.ctx);
+            mo.drawHitbox(this.ctx);
 
             if (mo.otherDirection) {
                 this.resetImage(mo);

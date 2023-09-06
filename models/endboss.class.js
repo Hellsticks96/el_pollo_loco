@@ -64,8 +64,12 @@ class Endboss extends MovableObject {
     }
 
     animate(){
+        let i = 0;
         setInterval(() => {
-            if (this.isHurt()) {
+            if (i < 10) {
+                this.playAnimation(this.ENDBOSS_ALERTED);
+            } else 
+            if (this.isHurt(0.8)) {
                 this.playAnimation(this.ENDBOSS_HURT);
             } else if (this.isDead) {
                 this.speedY = 10;
@@ -74,7 +78,8 @@ class Endboss extends MovableObject {
             } else {
                 this.playAnimation(this.ENDBOSS_WALKING);
                 this.moveLeft(10);
-            }         
+            }
+            i++;        
         }, 1000 / 10)
     }
 
