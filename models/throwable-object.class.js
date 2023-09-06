@@ -27,7 +27,6 @@ class ThrowableObject extends MovableObject{
         this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
-        this.throw();
         this.animate();
     }
 
@@ -38,9 +37,16 @@ class ThrowableObject extends MovableObject{
         this.throw_bottle_sound.play();
         this.speedY = 30;
         this.applyGravity();
-        this.throwMovementX = setInterval(() => {
-            this.x += 8;
-        }, 1000 / 60);
+        if (!this.otherDirection) {
+            this.throwMovementX = setInterval(() => {
+                this.x += 8;
+            }, 1000 / 60);
+        } else {
+            this.throwMovementX = setInterval(() => {
+                this.x -= 8;
+            }, 1000 / 60);
+        }
+        
     }
 
     animate(){

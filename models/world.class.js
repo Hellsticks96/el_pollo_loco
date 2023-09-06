@@ -209,9 +209,14 @@ camera_x = 0;
 
     checkBottleThrow(){
         if (this.keyboard.SPACE && this.timeSinceLastCall() && this.character_bottle_stash >= 10) {
+            
             this.timeNow = new Date().getTime();
-            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180);             
+            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180);
+            if (this.character.otherDirection) {
+                bottle.otherDirection = true;
+            }            
             this.throwableObject.push(bottle);
+            bottle.throw();
             this.character_bottle_stash -= 10;
             this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
             
