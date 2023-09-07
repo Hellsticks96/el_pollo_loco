@@ -3,12 +3,7 @@ class SmallChicken extends MovableObject{
     width = 60;
     x;
     y = 570;
-    offset = {
-        top: 5,
-        bottom: 0,
-        right: 5,
-        left: 5
-    }
+
     audio_death = new Audio('./audio/chicken_death.mp3');
     
     SMALL_CHICKEN_WALKING = [

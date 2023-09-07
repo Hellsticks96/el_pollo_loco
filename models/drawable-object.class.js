@@ -16,8 +16,13 @@ class DrawableObject {
     }
 
     loadImage(path){
-        this.img = new Image();
+        try{
+            this.img = new Image();
         this.img.src = path;
+        } catch(e){
+            console.log('Error: Could not load Image', e);
+            console.log('Could not load Image', this.img, path);
+        }
     }
 
     loadImages(arr){
@@ -46,7 +51,13 @@ class DrawableObject {
     }
 
     draw(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        try{
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch(e){
+            console.log('Error: Could not load Image', e);
+            console.log('Could not load Image', this.img);
+        }
+        
     }
 
     drawHitbox(ctx){

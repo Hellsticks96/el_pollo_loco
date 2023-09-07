@@ -70,7 +70,7 @@ camera_x = 0;
     checkEndcard(){ 
         if (this.character.isDead) {
             setTimeout(() => {
-                this.level.endcard.push(new Background('../img/9_intro_outro_screens/game_over/oh no you lost!.png', this.character.x -100, 0));
+                this.level.endcard.push(new Background('./img/9_intro_outro_screens/game_over/oh_no_you_lost!.png', this.character.x -100, 0));
                 this.character.stopAllMovements = true;
                 this.gameOver = true;
                 this.gameLost = true;
@@ -78,7 +78,7 @@ camera_x = 0;
         }
         if (this.level.endboss.length > 0 && this.level.endboss[0].isDead) {
             setTimeout(() => {
-                this.level.endcard.push(new Background('../img/9_intro_outro_screens/game_over/game over!.png', this.character.x -100, 0));
+                this.level.endcard.push(new Background('./img/9_intro_outro_screens/game_over/game_over!.png', this.character.x -100, 0));
                 this.character.stopAllMovements = true;
                 this.gameOver = true;
                 this.gameWon = true;
@@ -256,11 +256,15 @@ camera_x = 0;
             this.ctx.fillRect(0, 0, 1080, 720);
 
             this.ctx.translate(this.camera_x, 0);
+            
     
             this.grabAndAdd(this.level.backgrounds);
             
             this.grabAndAdd(this.level.enemies);
-            this.grabAndAdd(this.level.endboss);
+            if (this.level.endboss.length > 0) {
+                this.grabAndAdd(this.level.endboss);
+            }
+            
     
             this.grabAndAdd(this.throwableObject);
     

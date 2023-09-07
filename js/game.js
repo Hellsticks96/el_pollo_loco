@@ -4,11 +4,11 @@ let world;
 let startScreen;
 let endGameInterval;
 let silence = false;
-let endCardWon = new Background('./img/9_intro_outro_screens/game_over/game over!.png', 0, 0);
-let endCardLost = new Background('./img/9_intro_outro_screens/game_over/oh no you lost!.png', 0, 0);
-let background_music = new Audio('audio/background_music.mp3');
-let game_lost_sound = new Audio('audio/game_over_lost.mp3');
-let game_won_sound = new Audio('audio/game_over_won.mp3');
+let endCardWon = new Background('./img/9_intro_outro_screens/game_over/game_over!.png', 0, 0);
+let endCardLost = new Background('./img/9_intro_outro_screens/game_over/oh_no_you_lost!.png', 0, 0);
+let background_music = new Audio('./audio/background_music.mp3');
+let game_lost_sound = new Audio('./audio/game_over_lost.mp3');
+let game_won_sound = new Audio('./audio/game_over_won.mp3');
 let KEYS_TO_CHECK = [
     39,
     37,
@@ -53,6 +53,7 @@ function checkGameOver(){
     endGameInterval = setInterval(() => {
         if (world.gameOver == true && world.gameWon == true) {      
             setTimeout(() => {
+                silence = true;
                 background_music.pause();
                 game_won_sound.play()
                 world.gamePaused = true;
@@ -64,6 +65,7 @@ function checkGameOver(){
         };
         if (world.gameOver == true && world.gameLost == true) {      
             setTimeout(() => {
+                silence = true;
                 background_music.pause();
                 game_lost_sound.play();
                 world.gamePaused = true;
