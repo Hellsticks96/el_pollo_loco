@@ -313,7 +313,7 @@ camera_x = 0;
 
             mo.draw(this.ctx);
 
-            mo.drawHitbox(this.ctx);
+            //mo.drawHitbox(this.ctx);
 
             if (mo.otherDirection) {
                 this.resetImage(mo);

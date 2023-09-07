@@ -6,39 +6,39 @@ class Statusbar extends DrawableObject {
     percentage;
 
     IMAGES_HEALTH = [
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png'
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/60.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/80.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png'
     ];
 
     IMAGES_COIN = [
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png',
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png',
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png',
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png',
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png',
-        '../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png'
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png',
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png',
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png',
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png',
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png',
+        './img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png'
     ];
 
     IMAGES_BOTTLE = [
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png',
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png',
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png',
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png',
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png',
-        '../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png',
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png',
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png',
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png',
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png',
+        './img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
     ];
 
     IMAGES_HEALTH_ENDBOSS = [
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/40.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/60.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/80.png',
-        '../img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png'
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/40.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/60.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/80.png',
+        './img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png'
     ];
 
 
@@ -49,24 +49,23 @@ class Statusbar extends DrawableObject {
 
     pickArrayToLoad(images_indicator){
         if (images_indicator == 'health') {
-            this.loadImage('../img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png');
+            this.loadImage('./img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png');
             return this.IMAGES_HEALTH;
         } else if (images_indicator == 'coin') {
             this.y += 60;
-            this.loadImage('../img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png');
+            this.loadImage('./img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png');
             return this.IMAGES_COIN;
         } else if (images_indicator == 'bottle') {
             this.y += 120
-            this.loadImage('../img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png');
+            this.loadImage('./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png');
             return this.IMAGES_BOTTLE;
         } else if (images_indicator == 'endboss') {
             this.x = 700;
-            this.loadImage('../img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png');
+            this.loadImage('./img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png');
             return this.IMAGES_HEALTH_ENDBOSS;
         };
     }
     
-
     setPercentage(percentage, img){
         this.percentage = percentage;
         let path =  img[this.resolveImageIndex()];
