@@ -26,6 +26,8 @@ function startGame(){
     document.getElementById('start-img').classList.add('hide');
     document.getElementById('canvas').classList.remove('hide');
     document.getElementById('start_game_btn').classList.add('hide');
+    document.getElementById('mute_btn').classList.remove('hide-small');
+    silence = false;
     bindBtnPressEvents();
     checkGameOver();
     checkBackgroundMusic();
@@ -55,24 +57,30 @@ function checkGameOver(){
             setTimeout(() => {
                 silence = true;
                 background_music.pause();
+                background_music.currentTime = 0;
                 game_won_sound.play()
                 world.gamePaused = true;
                 const ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 endCardWon.draw(ctx);
                 clearInterval(endGameInterval)
+                document.getElementById('start_game_btn').innerText = 'Restart Game';
+                document.getElementById('start_game_btn').classList.remove('hide');
             }, 1500)           
         };
         if (world.gameOver == true && world.gameLost == true) {      
             setTimeout(() => {
                 silence = true;
                 background_music.pause();
+                background_music.currentTime = 0;
                 game_lost_sound.play();
                 world.gamePaused = true;
                 const ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 endCardLost.draw(ctx);
                 clearInterval(endGameInterval)
+                document.getElementById('start_game_btn').innerText = 'Restart Game';
+                document.getElementById('start_game_btn').classList.remove('hide');
             }, 1500)           
         };
     }, 100) 

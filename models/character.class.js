@@ -5,6 +5,7 @@ class Character extends MovableObject{
     x = 200;
     world;
     idleTimer = 0;
+    stopDeathLoop = false;
     walking_sound = new Audio('./audio/walking.mp3');
     jumping_sound = new Audio('./audio/character_jump.mp3');
     stopAllMovements = false;
@@ -118,10 +119,13 @@ class Character extends MovableObject{
 
         setInterval( () => {          
             if (!this.stopAllMovements) {
-                if (this.isDead) {
+                if (this.isDead && this.stopDeathLoop == false) {
                     this.walking_sound.pause();
+                    console.log('Current Gravity is', this.gravity);
                     this.speedY = 15;
+                    console.log('Current SpeedY is', this.speedY)
                     this.playAnimation(this.IMAGES_DEATH);
+                    this.stopDeathLoop = true;
                 } else if(this.isHurt(0.7)) {
                     this.playAnimation(this.IMAGES_HURT);
                 } else {
@@ -144,6 +148,8 @@ class Character extends MovableObject{
                      }
                     }
                 }
+            } else {
+                this.walking_sound.pause();
             }
             
            

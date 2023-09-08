@@ -29,20 +29,20 @@
 <body onload="init()">
     <h1 class="hide-small">El Pollo Loco</h1>
 
-    <canvas class="hide" id="canvas" width="1080" height="720" style="overflow-x: hidden;">
+    <canvas class="hide" id="canvas" width="1080px" height="720px" style="overflow-x: hidden;">
 
     </canvas>
     <div class="mute-btn-container">
-        <button onclick="checkMute()" class="mute-btn">Mute</button>
+        <button onclick="checkMute()" class="mute-btn hide-small" id="mute_btn">Mute</button>
     </div>
     <div class="mobile-controls hide-large">
         <div class="movement-left-right">
-            <button class="mobile-control-btn" id="moveLeft_Mobile">left</button>
-            <button class="mobile-control-btn" id="moveRight_Mobile">right</button>
+            <button class="mobile-control-btn background-icon-left" id="moveLeft_Mobile"></button>
+            <button class="mobile-control-btn background-icon-right" id="moveRight_Mobile"></button>
         </div>
         <div class="shoot-and-jump">
-            <button class="mobile-control-btn" id="shoot_Mobile">Shoot</button>
-            <button class="mobile-control-btn" id="jump_Mobile">jump</button>
+            <button class="mobile-control-btn background-icon-shoot" id="shoot_Mobile"></button>
+            <button class="mobile-control-btn background-icon-jump" id="jump_Mobile"></button>
         </div>    
     </div>
     <img class="startscreen_endscreen" src="img/9_intro_outro_screens/start/startscreen_1.png" id="start-img">

@@ -116,7 +116,7 @@ camera_x = 0;
                         clearInterval(thrownBottle.throwMovementX);
                         clearInterval(thrownBottle.animation_BottleRotation);
                         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
-                        this.endboss.hit(50);
+                        this.endboss.hit(15);
                         
                         if(this.endboss.isDead){
                             this.statusbar_endboss.splice(0, 1);
@@ -158,7 +158,7 @@ camera_x = 0;
             });
             this.level.endboss.forEach((endboss) => {
                 if (this.character.isColliding(endboss)) {
-                    this.character.hit(5);
+                    this.character.hit(15);
                     this.statusbar_health.setPercentage(this.character.energy, this.statusbar_health.IMAGES_HEALTH);
                               
                 };

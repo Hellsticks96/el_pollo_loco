@@ -60,7 +60,7 @@ class Statusbar extends DrawableObject {
             this.loadImage('./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png');
             return this.IMAGES_BOTTLE;
         } else if (images_indicator == 'endboss') {
-            this.x = 700;
+            this.x = 650;
             this.loadImage('./img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png');
             return this.IMAGES_HEALTH_ENDBOSS;
         };
