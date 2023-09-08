@@ -4,14 +4,16 @@ class Background extends MovableObject {
     canvas;
     ctx;
     
-    constructor(bg, x, y, canvas){
-        super().loadImage(bg);
-     
-             
+    /**
+     * 
+     * @param {string} bg - path to background img
+     * @param {number} x - the x coordinate the img should be placed at in canvas
+     * @param {number} y - the y coordinate the img should be placed at in canvas
+     */
+    constructor(bg, x, y,){
+        super().loadImage(bg);    
         this.x = x;
-        this.y = y;
-        
-        
+        this.y = y; 
     }
 
     

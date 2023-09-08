@@ -52,6 +52,9 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    /**
+     * loads all neccesary imgs sets an x coordinate and starts animations
+     */
     constructor(){
         super().loadImage('./img/4_enemie_boss_chicken/1_walk/G1.png');
         this.x = (1079* 3) - 200;
@@ -63,6 +66,10 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * @param {number} i - counter to time intro animation
+     * This function checks the current status of the object and plays the set animations.
+     */
     animate(){
         let i = 0;
         setInterval(() => {
@@ -82,5 +89,4 @@ class Endboss extends MovableObject {
             i++;        
         }, 1000 / 10)
     }
-
 }

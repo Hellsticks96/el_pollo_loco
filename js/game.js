@@ -21,18 +21,31 @@ function init(){
     canvas = document.getElementById('canvas');
 }
 
+/**
+ * This function starts the game as well as hiding some buttons, imgs and is starting the background music
+ */
+
 function startGame(){
     world = new World(canvas, keyboard);
-    document.getElementById('start-img').classList.add('hide');
-    document.getElementById('canvas').classList.remove('hide');
-    document.getElementById('start_game_btn').classList.add('hide');
-    document.getElementById('mute_btn').classList.remove('hide-small');
+    setButtonsAndCanvas();
     silence = false;
     bindBtnPressEvents();
     checkGameOver();
     checkBackgroundMusic();
 }
 
+function setButtonsAndCanvas(){
+    document.getElementById('start-img').classList.add('hide');
+    document.getElementById('canvas').classList.remove('hide');
+    document.getElementById('start_game_btn').classList.add('hide');
+    document.getElementById('mute_btn').classList.remove('hide-small');
+}
+
+/**
+ * @param {boolean} silence - Determines whether or not music should be played
+ * This function is used to turn the music on and off.
+ * If @param silence is false it will be set to true and the other way around.
+ */
 function checkMute(){
     if (silence == false) {
         silence = true;
@@ -41,6 +54,9 @@ function checkMute(){
     }
 }
 
+/**
+ * Checks whether music should be played or not.
+ */
 function checkBackgroundMusic(){
     setInterval(() => {
         if (!silence) {
@@ -51,41 +67,64 @@ function checkBackgroundMusic(){
     }, 100)
 }
 
+
+/**
+ * @param {boolean} world.gameOver - If the character or the endboss are dying, this will be set to true.
+ * This function constantly checks whether or not the game is over.
+ */
 function checkGameOver(){
     endGameInterval = setInterval(() => {
-        if (world.gameOver == true && world.gameWon == true) {      
+        if (world.gameOver == true && world.gameWon == true) {                  
             setTimeout(() => {
-                silence = true;
-                background_music.pause();
-                background_music.currentTime = 0;
-                game_won_sound.play()
-                world.gamePaused = true;
-                const ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                endCardWon.draw(ctx);
-                clearInterval(endGameInterval)
-                document.getElementById('start_game_btn').innerText = 'Restart Game';
-                document.getElementById('start_game_btn').classList.remove('hide');
+                showGameWonEndcard();
             }, 1500)           
         };
         if (world.gameOver == true && world.gameLost == true) {      
             setTimeout(() => {
-                silence = true;
-                background_music.pause();
-                background_music.currentTime = 0;
-                game_lost_sound.play();
-                world.gamePaused = true;
-                const ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                endCardLost.draw(ctx);
-                clearInterval(endGameInterval)
-                document.getElementById('start_game_btn').innerText = 'Restart Game';
-                document.getElementById('start_game_btn').classList.remove('hide');
+                showGameLostEndcard();
             }, 1500)           
         };
     }, 100) 
 }
 
+/**
+ * This function is called when the endboss is defeated. It will pause the music, play a sound and show the right endcard.
+ */
+function showGameWonEndcard(){
+    silence = true;
+    background_music.pause();
+    background_music.currentTime = 0;
+    game_won_sound.play()
+    world.gamePaused = true;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    endCardWon.draw(ctx);
+    clearInterval(endGameInterval)
+    document.getElementById('start_game_btn').innerText = 'Restart Game';
+    document.getElementById('start_game_btn').classList.remove('hide');
+}
+
+/**
+ * Same function as the one above. Only for a lost game with different sound and endcard.
+ */
+function showGameLostEndcard(){
+    silence = true;
+    background_music.pause();
+    background_music.currentTime = 0;
+    game_lost_sound.play();
+    world.gamePaused = true;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    endCardLost.draw(ctx);
+    clearInterval(endGameInterval)
+    document.getElementById('start_game_btn').innerText = 'Restart Game';
+    document.getElementById('start_game_btn').classList.remove('hide');
+}
+
+
+/**
+ * This function binds the mobile touch controls to an event listener. Is used to call functions in game.
+ */
 function bindBtnPressEvents(){
 
     document.getElementById('canvas').addEventListener('touchstart', (e) => {
@@ -135,6 +174,10 @@ function bindBtnPressEvents(){
     });
 }
 
+
+/**
+ * This function sets parameters to true when keys are pressed. Params according to keyboard buttons.
+ */
 window.addEventListener('keydown', (e) => {
     let keyCode = e.keyCode;
 
@@ -155,6 +198,9 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+/**
+ * Changes the param back to false when the key is released.
+ */
 window.addEventListener('keyup', (e) => {
     let keyCode = e.keyCode;
 

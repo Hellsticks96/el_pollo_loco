@@ -42,11 +42,21 @@ class Statusbar extends DrawableObject {
     ];
 
 
+    /**
+     * Loads neccesary imgs
+     * @param {string} images_indicator - keyword to get the right img array
+     */
     constructor(images_indicator){
         super();
         this.loadImages(this.pickArrayToLoad(images_indicator));
     }
 
+    /**
+     * 
+     * @param {string} images_indicator - keyword to get the right img array
+     * @returns {Array}
+     * Returns img array according to keyword.
+     */
     pickArrayToLoad(images_indicator){
         if (images_indicator == 'health') {
             this.loadImage('./img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png');
@@ -66,12 +76,24 @@ class Statusbar extends DrawableObject {
         };
     }
     
+    /**
+     * 
+     * @param {number} percentage - percentage of energy/bottle-stash
+     * @param {Array} img - array of energy/coin/bottle statusbar array
+     * Picks the right statusbar img according to the percentage
+     */
     setPercentage(percentage, img){
         this.percentage = percentage;
         let path =  img[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+
+    /**
+     * 
+     * @returns {number}
+     * evaluates which position should be used in statusbar img array
+     */
     resolveImageIndex(){
         if (this.percentage == 100) {
             return 5;

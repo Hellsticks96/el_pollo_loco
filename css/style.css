@@ -111,13 +111,13 @@ canvas {
 
 /* Media queries */
 
-@media only screen and (min-width: 1190px), (min-height: 830px){
+@media only screen and (min-width: 1190px), (min-height: 1001px){
     .hide-large{
         display: none;
     }
 }
 
-@media only screen and (max-width: 820px), (min-height: 1000px){
+@media only screen and (max-width: 820px), (max-height: 1200px){
     .hide-large {
         display: flex;
     }

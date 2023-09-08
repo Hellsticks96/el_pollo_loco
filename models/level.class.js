@@ -9,6 +9,10 @@ class Level {
     endcard
     level_end_x = 1079*3;
 
+    /**
+     * This function is setting the arrays entererd in @param level1 to the @param - of this object(above)
+     * 
+     */
     constructor(enemies, endboss, clouds, backgrounds, statusbars, coin_collectables, bottle_collectables, endcard){
         this.enemies = enemies;
         this.endboss = endboss

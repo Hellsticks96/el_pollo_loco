@@ -16,6 +16,12 @@ class SmallChicken extends MovableObject{
         './img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
     
+    /**
+     * 
+     * @param {*} x - x coordinate in canvas the img should be placed at
+     * This constructor loads all images for animations and calculates the spawnpoint of the object.
+     * Additionally the animate interval is started.
+     */
     constructor(x){
         super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.SMALL_CHICKEN_WALKING);
@@ -24,23 +30,24 @@ class SmallChicken extends MovableObject{
         this.animate();
     }
 
-    animate(){
-        
+    /**
+     * @param {boolean} isDead - used to check whether something is dead or not.
+     * If the object is alive, this function will move it left and play the walking animation.
+     * If not the death images will be animated.
+     */
+    animate(){        
         setInterval(() => {
             if (!this.isDead) {
                 this.moveLeft(this.speed);
-            }
-            
+            }            
         }, 1000 / 60);
         
-
         setInterval(() => {
             if (this.isDead) {
                 this.playAnimation(this.SMALL_IMAGES_DYING);
             } else {
                 this.playAnimation(this.SMALL_CHICKEN_WALKING);
-            }
-            
+            }           
         }, 1000 / 6);
     }
     

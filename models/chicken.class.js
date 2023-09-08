@@ -21,21 +21,30 @@ class Chicken extends MovableObject{
         './img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
     
+    /**
+     * 
+     * @param {*} x - x coordinate in canvas the img should be placed at
+     * This constructor loads all images for animations and calculates the spawnpoint of the object.
+     * Additionally the animate interval is started.
+     */
     constructor(x){
         super();
         this.loadImages(this.CHICKEN_WALKING);
         this.loadImages(this.IMAGES_DYING);
-        this.x = x + (Math.random() * 300);
+        this.x = x + (Math.random() * 500);
         this.animate();
     }
 
-    animate(){
-        
+    /**
+     * @param {boolean} isDead - used to check whether something is dead or not.
+     * If the object is alive, this function will move it left and play the walking animation.
+     * If not the death images will be animated.
+     */
+    animate(){        
         setInterval(() => {
             if (!this.isDead) {
                 this.moveLeft(this.speed);
-            }
-            
+            }            
         }, 1000 / 60);
         
 
@@ -44,8 +53,7 @@ class Chicken extends MovableObject{
                 this.playAnimation(this.IMAGES_DYING);
             } else {
                 this.playAnimation(this.CHICKEN_WALKING);
-            }
-            
+            }           
         }, 1000 / 6);
     }
     

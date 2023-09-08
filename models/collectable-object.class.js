@@ -19,7 +19,15 @@ class CollectableObject extends DrawableObject {
         './img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
     ];
 
-
+    /**
+     * 
+     * @param {string} img - path to img
+     * @param {number} x - x coordinate in canvas object should be placed at
+     * @param {number} y  - x coordinate in canvas object should be placed at
+     * @param {number} height - heigth of img
+     * @param {number} width - width of img
+     * loads all neccesary imgs and starts animation (coin only)
+     */
     constructor(img, x, y, height, width){
         super().loadImage(img);
         this.loadImages(this.IMAGES_COIN);
@@ -31,6 +39,11 @@ class CollectableObject extends DrawableObject {
         this.animate(img);
     }
 
+    /**
+     * 
+     * @param {string} img - path to picture
+     * checks if the object and starts an animation if so
+     */
     animate(img){
         setInterval(() => {
             if (img == './img/8_coin/coin_1.png') {

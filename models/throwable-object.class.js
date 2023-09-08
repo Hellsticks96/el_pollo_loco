@@ -21,6 +21,12 @@ class ThrowableObject extends MovableObject{
         './img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    /**
+     * 
+     * @param {number} x - x coordinate the object will be placed at in canvas 
+     * @param {*} y - y coordinate the object will be placed at in canvas
+     * Loads neccesary imgs, sets coordinates and starts animations.  
+     */
     constructor(x, y){
         super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_BOTTLE_SPINNING);
@@ -32,13 +38,17 @@ class ThrowableObject extends MovableObject{
 
     
 
-
+    /**
+     * Starts throwing animation, plays throwing sound and sets gravity.
+     * Also checks in which direction the bottle should fly.
+     */
     throw(){ 
         this.throw_bottle_sound.play();
         this.speedY = 30;
         this.applyGravity();
         if (!this.otherDirection) {
             this.throwMovementX = setInterval(() => {
+                this.x - 100;
                 this.x += 8;
             }, 1000 / 60);
         } else {
@@ -49,6 +59,9 @@ class ThrowableObject extends MovableObject{
         
     }
 
+    /**
+     * Plays rotating animation of bottle
+     */
     animate(){
         this.animation_BottleRotation = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_SPINNING);

@@ -78,6 +78,10 @@ class Character extends MovableObject{
         './img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    /**
+     * Using this constructor all images for all animations of this object are loaded.
+     * Additionally a function that sets gravity, an animate function and and idle timer are started.
+     */
     constructor(){
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -91,8 +95,12 @@ class Character extends MovableObject{
         this.checkIdle();   
     }
 
-    animate(){
-        
+    /**
+     * @param {boolean} stopAllMovements - is used to stop movements of character when the game ends
+     * This function moves the character by checking which keyboard event is true and starting set functions.
+     * At the same time it checks which image loop should be played and starts the correct loop.
+     */
+    animate(){        
         setInterval( () => {
             if (!this.stopAllMovements) {
                 this.walking_sound.pause();
@@ -115,15 +123,11 @@ class Character extends MovableObject{
             }
         }, 1000 / 60);
 
-        
-
         setInterval( () => {          
             if (!this.stopAllMovements) {
                 if (this.isDead && this.stopDeathLoop == false) {
                     this.walking_sound.pause();
-                    console.log('Current Gravity is', this.gravity);
                     this.speedY = 15;
-                    console.log('Current SpeedY is', this.speedY)
                     this.playAnimation(this.IMAGES_DEATH);
                     this.stopDeathLoop = true;
                 } else if(this.isHurt(0.7)) {
@@ -150,12 +154,14 @@ class Character extends MovableObject{
                 }
             } else {
                 this.walking_sound.pause();
-            }
-            
-           
+            }          
         }, 1000 / 12);
     }
 
+    /**
+     * @param {number} idleTimer - Timer to check when the idle image loop should be started.
+     * This function is used to check the time since the last time a button was pressed. Once per second @param idleTimer goes up by 1.
+     */
     checkIdle(){
         setInterval(() => {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {

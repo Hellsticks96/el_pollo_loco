@@ -1,4 +1,7 @@
 const level1 = new Level(
+    /**
+     * Array for Enemies
+     */
     [
         new Chicken(700),
         new Chicken(1000),
@@ -13,10 +16,16 @@ const level1 = new Level(
         new SmallChicken(900)
     ],
 
+    /**
+     * Array for endboss
+     */
     [
 
     ],
 
+    /**
+     * Array for clouds
+     */
     [
         new Cloud(300),
         new Cloud(700),
@@ -26,6 +35,9 @@ const level1 = new Level(
         new Cloud(3000)
     ],
 
+    /**
+     * Array for backgrounds
+     */
     [
         new Background('./img/5_background/layers/air.png', 0,0 ),
         new Background('./img/5_background/layers/3_third_layer/1.png', 0, 0),
@@ -46,12 +58,18 @@ const level1 = new Level(
         new Background('./img/5_background/layers/1_first_layer/2.png', 1079 * 3, 0)
     ],
 
+    /**
+     * Array for statusbars
+     */
     [
         new Statusbar('health'),
         new Statusbar('coin'),
         new Statusbar('bottle')
     ],
 
+    /**
+     * Array for coins
+     */
     [
         new CollectableObject('./img/8_coin/coin_1.png', 500, 200, 120, 120),
         new CollectableObject('./img/8_coin/coin_1.png', 800, 150, 120, 120),
@@ -66,6 +84,9 @@ const level1 = new Level(
 
     ],
 
+    /**
+     * Array for salsa bottles
+     */
     [
         new CollectableObject('./img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 700, 525, 120, 80),
         new CollectableObject('./img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1200, 525, 120, 80),
@@ -76,6 +97,9 @@ const level1 = new Level(
         new CollectableObject('./img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 3000, 525, 120, 80)
     ],
 
+    /**
+     * Array for endcard
+     */
     [
 
     ],
