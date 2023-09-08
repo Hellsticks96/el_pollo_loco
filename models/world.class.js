@@ -175,7 +175,7 @@ lastCallTime = 0;
         clearInterval(thrownBottle.throwMovementX);
         clearInterval(thrownBottle.animation_BottleRotation);
         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
-        endboss.hit(15); 
+        endboss.hit(20); 
     }
 
     /**
