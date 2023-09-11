@@ -43,7 +43,6 @@ class ThrowableObject extends MovableObject{
      * Also checks in which direction the bottle should fly.
      */
     throw(){ 
-        this.throw_bottle_sound.play();
         this.speedY = 30;
         this.applyGravity();
         if (!this.otherDirection) {

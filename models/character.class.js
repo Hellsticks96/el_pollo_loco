@@ -115,7 +115,7 @@ class Character extends MovableObject{
                     this.otherDirection = true;
                 }
                 if (this.world.keyboard.UP && !this.isAboveGround()) {
-                    this.jumping_sound.play();
+                    this.world.checkAudioPlayback(this.jumping_sound);
                     this.jump();
                 }
     

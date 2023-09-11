@@ -324,6 +324,7 @@ lastCallTime = 0;
                 bottle.otherDirection = true;
             }            
             this.throwableObject.push(bottle);
+            this.checkAudioPlayback(bottle.throw_bottle_sound);
             bottle.throw();
             this.character_bottle_stash -= 10;
             this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);            
