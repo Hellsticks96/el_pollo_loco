@@ -28,7 +28,7 @@ class Chicken extends MovableObject{
      * Additionally the animate interval is started.
      */
     constructor(x){
-        super();
+        super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.CHICKEN_WALKING);
         this.loadImages(this.IMAGES_DYING);
         this.x = x + (Math.random() * 500);

@@ -1,54 +1,38 @@
 class World{
 character = new Character();
-
 spawnCharacter = true;
 
 stoppableInterval;
 
 level = level1;
-
 canvas;
-
 ctx;
-
 keyboard;
 
 endboss_count = 0;
-
 endboss;
 
 random_spawn_timer = Math.floor((Math.random() * 8) + 3);
-
 basic_timer = 0;
-
 timeNow;
 
+silence = false;
 gamePaused = false;
-
 gameOver = false;
-
 gameWon = false;
-
 gameLost = false;
 
 stopImageLoop = true;
 
 statusbar_health = this.level.statusbars[0];
-
 statusbar_coin = this.level.statusbars[1];
-
 statusbar_bottle = this.level.statusbars[2];
-
 statusbar_endboss = [];
 
 throwableObject = [];
-
 coin_collectable = this.level.coin_collectables;
-
 bottle_collectable = this.level.bottle_collectables;
-
 character_coin_stash = 0;
-
 character_bottle_stash = 0;
 
 camera_x = 0;
@@ -70,6 +54,7 @@ lastCallTime = 0;
         this.run();
         this.runBasicTimer();
     }
+
 
     /**
      * Sets @param world of character to this object
@@ -155,13 +140,15 @@ lastCallTime = 0;
          * Starts bottle breaking sound, stops bottle animations and movement, hits the enemy and then calls a delete function for the enemy
          */
     bottleEnemyHit(enemy, thrownBottle){
-        thrownBottle.bottle_breaking_sound.play();
+        this.checkAudioPlayback(thrownBottle.bottle_breaking_sound);
         clearInterval(thrownBottle.throwMovementX);
         clearInterval(thrownBottle.animation_BottleRotation);
         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
         enemy.hit(100);
         this.deleteHitEnemy(enemy);     
     }
+
+
 
     /**
      * 
@@ -170,8 +157,8 @@ lastCallTime = 0;
      * Starts bottle breaking sound, stops bottle animations and movement and hits the endboss.
      */
     bottleEndbossHit(endboss, thrownBottle){
-        thrownBottle.bottle_breaking_sound.play();
-        endboss.audio_hit.play()
+        this.checkAudioPlayback(thrownBottle.bottle_breaking_sound);
+        this.checkAudioPlayback(endboss.audio_hit);       
         clearInterval(thrownBottle.throwMovementX);
         clearInterval(thrownBottle.animation_BottleRotation);
         thrownBottle.playAnimation(thrownBottle.IMAGES_BOTTLE_SPLASH, this.stopImageLoop);
@@ -197,7 +184,7 @@ lastCallTime = 0;
      * Deletes the hit enemy from the enemy array. 
      */
     deleteHitEnemy(obj){
-        obj.audio_death.play();
+        this.checkAudioPlayback(obj.audio_death);
         setTimeout(() => {
                     this.level.enemies.splice(this.getEnemyIndex(obj), 1);
         }, 500); 
@@ -291,7 +278,7 @@ lastCallTime = 0;
      * Plays sound, adds 10 to @param character_coin_stash, sets statusbar percentage and deletes the coin from canvas 
      */
     pickUpCoin(coin){
-        coin.coin_collection_sound.play();
+        this.checkAudioPlayback(coin.coin_collection_sound);
         this.character_coin_stash += 10;
         this.statusbar_coin.setPercentage(this.character_coin_stash, this.statusbar_coin.IMAGES_COIN);
         this.coin_collectable.splice(this.coin_collectable.findIndex(x => x.x === coin.x), 1);    
@@ -319,7 +306,7 @@ lastCallTime = 0;
      * Plays sound, adds 10 to @param character_bottle_stash, sets statusbar percentage and deletes the coin from canvas 
      */
     pickUpBottle(bottle){
-        bottle.bottle_collection_sound.play();
+        this.checkAudioPlayback(bottle.bottle_collection_sound);
         this.character_bottle_stash += 10;
         this.statusbar_bottle.setPercentage(this.character_bottle_stash, this.statusbar_bottle.IMAGES_BOTTLE);
         this.bottle_collectable.splice(this.bottle_collectable.findIndex(x => x.x === bottle.x), 1);
@@ -368,6 +355,17 @@ lastCallTime = 0;
             this.statusbar_endboss.push(health_endboss);  
             this.endboss_count++;
             this.ctx.translate(this.level.endboss[0], 0);
+        }
+    }
+
+    /**
+     * 
+     * @param {Object} audio - The sound that should be played
+     * This checks whether or not the game is muted. If it isn't the audio will be played. 
+     */
+    checkAudioPlayback(audio){
+        if (!this.silence) {
+            audio.play();
         }
     }
 

@@ -71,7 +71,13 @@ class DrawableObject {
      * this draws an img on the canvas using the set coordinates, height, width and img
      */
     draw(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        try {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch(e){
+            console.log(e)
+            console.log('problems with', this.img)
+        }
+        
     }
 
 

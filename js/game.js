@@ -3,7 +3,7 @@ let canvas;
 let world;
 let startScreen;
 let endGameInterval;
-let silence = false;
+
 let endCardWon = new Background('./img/9_intro_outro_screens/game_over/game_over!.png', 0, 0);
 let endCardLost = new Background('./img/9_intro_outro_screens/game_over/oh_no_you_lost!.png', 0, 0);
 let background_music = new Audio('./audio/background_music.mp3');
@@ -25,13 +25,14 @@ function init(){
  * This function starts the game as well as hiding some buttons, imgs and is starting the background music
  */
 
-function startGame(){
-    world = new World(canvas, keyboard);
-    setButtonsAndCanvas();
-    silence = false;
-    bindBtnPressEvents();
-    checkGameOver();
-    checkBackgroundMusic();
+async function startGame(){
+        initializeLevel();
+        setButtonsAndCanvas();
+        silence = false;
+        bindBtnPressEvents();
+        checkGameOver();
+        checkBackgroundMusic();
+        world = new World(canvas, keyboard);
 }
 
 function setButtonsAndCanvas(){
@@ -47,10 +48,10 @@ function setButtonsAndCanvas(){
  * If @param silence is false it will be set to true and the other way around.
  */
 function checkMute(){
-    if (silence == false) {
-        silence = true;
+    if (world.silence == false) {
+        world.silence = true;
     } else {
-        silence = false;
+        world.silence = false;
     }
 }
 
@@ -59,7 +60,7 @@ function checkMute(){
  */
 function checkBackgroundMusic(){
     setInterval(() => {
-        if (!silence) {
+        if (!world.silence) {
             background_music.play();
         } else {
             background_music.pause();
@@ -97,11 +98,12 @@ function showGameWonEndcard(){
     game_won_sound.play()
     world.gamePaused = true;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    endCardWon.draw(ctx);
+    ctx.clearRect(0, 0, 3.237, canvas.height);
+    //endCardWon.draw(ctx);
     clearInterval(endGameInterval)
     document.getElementById('start_game_btn').innerText = 'Restart Game';
     document.getElementById('start_game_btn').classList.remove('hide');
+    return;
 }
 
 /**
@@ -114,7 +116,7 @@ function showGameLostEndcard(){
     game_lost_sound.play();
     world.gamePaused = true;
     const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, 3.237, canvas.height);
     endCardLost.draw(ctx);
     clearInterval(endGameInterval)
     document.getElementById('start_game_btn').innerText = 'Restart Game';

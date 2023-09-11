@@ -1,4 +1,7 @@
-const level1 = new Level(
+let level1;
+
+function initializeLevel(){
+ level1 = new Level(
     /**
      * Array for Enemies
      */
@@ -104,3 +107,4 @@ const level1 = new Level(
 
     ],
 );
+}
