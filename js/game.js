@@ -28,7 +28,6 @@ function init(){
 async function startGame(){
         initializeLevel();
         setButtonsAndCanvas();
-        silence = false;
         bindBtnPressEvents();
         checkGameOver();
         checkBackgroundMusic();

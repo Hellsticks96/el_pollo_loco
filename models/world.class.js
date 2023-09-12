@@ -378,47 +378,58 @@ lastCallTime = 0;
             this.ctx.fillRect(0, 0, 1080, 720);
 
             this.ctx.translate(this.camera_x, 0);
-            
-    
-            this.grabAndAdd(this.level.backgrounds);
-            
-            this.grabAndAdd(this.level.enemies);
-            if (this.level.endboss.length > 0) {
-                this.grabAndAdd(this.level.endboss);
-            }
-            
-    
-            this.grabAndAdd(this.throwableObject);
-    
-            this.grabAndAdd(this.coin_collectable);
-            this.grabAndAdd(this.bottle_collectable);
-    
-            this.grabAndAdd(this.level.clouds);
-    
+               
             this.ctx.translate(-this.camera_x, 0);
-            this.addToMap(this.statusbar_health);
-            this.addToMap(this.statusbar_coin);
-            this.addToMap(this.statusbar_bottle);
-            if (this.statusbar_endboss.length > 0) {
-                this.addToMap(this.statusbar_endboss[0]);
-            }
+            this.addStaticObjects();
             this.ctx.translate(this.camera_x, 0);
     
             if (this.spawnCharacter) {
                 this.addToMap(this.character);
             }
-            
-    
-            if (this.level.endcard.length > 0) {
-                this.grabAndAdd(this.level.endcard);
-            }
-    
+  
             this.ctx.translate(-this.camera_x, 0);
     
             let self = this;
             requestAnimationFrame(function(){
                 self.draw();
             });           
+        }
+    }
+
+    /**
+     * This function is using @function grabAndAdd to iterate through different arrays of objects.
+     */
+    grabAndAddAll(){
+        this.grabAndAdd(this.level.backgrounds);        
+        this.grabAndAdd(this.level.enemies);      
+        this.grabAndAdd(this.throwableObject);
+        this.grabAndAdd(this.coin_collectable);
+        this.grabAndAdd(this.bottle_collectable);
+        this.grabAndAdd(this.level.clouds);
+        this.checkEndbossAndEndcard()
+    }
+
+    /**
+     * Checks whether or not the endboss should be spawned and if an endcard should be drawn.
+     */
+    checkEndbossAndEndcard(){
+        if (this.level.endboss.length > 0) {
+            this.grabAndAdd(this.level.endboss);
+        };
+        if (this.level.endcard.length > 0) {
+            this.grabAndAdd(this.level.endcard);
+        };
+    }
+
+    /**
+     * Adds objects to map which always stay in the same place.
+     */
+    addStaticObjects(){
+        this.addToMap(this.statusbar_health);
+        this.addToMap(this.statusbar_coin);
+        this.addToMap(this.statusbar_bottle);
+        if (this.statusbar_endboss.length > 0) {
+            this.addToMap(this.statusbar_endboss[0]);
         }
     }
 

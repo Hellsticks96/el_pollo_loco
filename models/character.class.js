@@ -100,29 +100,12 @@ class Character extends MovableObject{
      * This function moves the character by checking which keyboard event is true and starting set functions.
      * At the same time it checks which image loop should be played and starts the correct loop.
      */
-    animate(){        
-        setInterval( () => {
-            if (!this.stopAllMovements) {
-                this.walking_sound.pause();
-                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                    this.world.checkAudioPlayback(this.walking_sound);
-                    this.moveRight();
-                    this.otherDirection = false;
-                }
-                if (this.world.keyboard.LEFT && this.x > 105) {
-                    this.world.checkAudioPlayback(this.walking_sound);
-                    this.moveLeft();
-                    this.otherDirection = true;
-                }
-                if (this.world.keyboard.UP && !this.isAboveGround()) {
-                    this.world.checkAudioPlayback(this.jumping_sound);
-                    this.jump();
-                }
-    
-                this.world.camera_x = -this.x + 100;
-            }
-        }, 1000 / 60);
+    animate(){
+        this.checkMovements();        
+        this.checkAnimations();
+    }
 
+    checkAnimations(){
         setInterval( () => {          
             if (!this.stopAllMovements) {
                 if (this.isDead && this.stopDeathLoop == false) {
@@ -156,6 +139,30 @@ class Character extends MovableObject{
                 this.walking_sound.pause();
             }          
         }, 1000 / 12);
+    }
+
+    checkMovements(){
+        setInterval( () => {
+            if (!this.stopAllMovements) {
+                this.walking_sound.pause();
+                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                    this.world.checkAudioPlayback(this.walking_sound);
+                    this.moveRight();
+                    this.otherDirection = false;
+                }
+                if (this.world.keyboard.LEFT && this.x > 105) {
+                    this.world.checkAudioPlayback(this.walking_sound);
+                    this.moveLeft();
+                    this.otherDirection = true;
+                }
+                if (this.world.keyboard.UP && !this.isAboveGround()) {
+                    this.world.checkAudioPlayback(this.jumping_sound);
+                    this.jump();
+                }
+    
+                this.world.camera_x = -this.x + 100;
+            }
+        }, 1000 / 60);
     }
 
     /**

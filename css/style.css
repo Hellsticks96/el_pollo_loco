@@ -106,6 +106,21 @@ canvas {
     display: none;
 }
 
+.turn-phone-notification-container {
+    position: absolute;
+    bottom: 256px;
+    background-color: brown;
+    padding: 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.turn-phone-img {
+    transform: rotate(90deg);
+    object-fit: contain;
+    height: 60px;
+}
 
 
 
@@ -129,6 +144,24 @@ canvas {
     }
 }
 
+@media only screen and (min-height: 700px), (max-width: 400px){  
+    .hide-phone-vertical {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 700px), (max-height: 400px){
+    .hide-phone-horizontal {
+        display: none;
+    }
+
+    .start_btn {
+        position: absolute;
+        top: 16px;
+        margin: 0;
+    }
+}
+
 @media only screen and (max-width: 1190px){
     .hide-small{
         display: none;
@@ -142,11 +175,6 @@ canvas {
     .mobile-controls {
         position: absolute;
         bottom: 0;
-    }
-
-    .start_btn {
-        position: absolute;
-        top: 0;
     }
 
     .mute-btn {
