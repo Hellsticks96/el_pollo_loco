@@ -85,19 +85,23 @@ lastCallTime = 0;
         if (this.character.isDead) {
             setTimeout(() => {
                 this.level.endcard.push(new Background('./img/9_intro_outro_screens/game_over/oh_no_you_lost!.png', this.character.x -100, 0));
-                this.character.stopAllMovements = true;
-                this.gameOver = true;
-                this.gameLost = true;
+                this.setGameEndVariables();
             }, 3000);
         }
         if (this.level.endboss.length > 0 && this.level.endboss[0].isDead) {
             setTimeout(() => {
                 this.level.endcard.push(new Background('./img/9_intro_outro_screens/game_over/game_over!.png', this.character.x -100, 0));
-                this.character.stopAllMovements = true;
-                this.gameOver = true;
-                this.gameWon = true;
+                this.setGameEndVariables();
             }, 3000);
         }
+    }
+
+    setGameEndVariables(){
+        this.character.stopAllMovements = true;
+        this.gameOver = true;
+        this.gameWon = true;
+        this.silence = true;
+        this.spawnCharacter = false;
     }
 
     /**
@@ -378,10 +382,13 @@ lastCallTime = 0;
             this.ctx.fillRect(0, 0, 1080, 720);
 
             this.ctx.translate(this.camera_x, 0);
-               
-            this.ctx.translate(-this.camera_x, 0);
-            this.addStaticObjects();
-            this.ctx.translate(this.camera_x, 0);
+            this.grabAndAddAll();
+            if (!this.gameOver) {
+                this.ctx.translate(-this.camera_x, 0);
+                this.addStaticObjects();
+                this.ctx.translate(this.camera_x, 0);
+            }
+            
     
             if (this.spawnCharacter) {
                 this.addToMap(this.character);
