@@ -92,7 +92,7 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();  
-        this.checkIdle();   
+        this.countIdle();   
     }
 
     /**
@@ -105,42 +105,58 @@ class Character extends MovableObject{
         this.checkAnimations();
     }
 
+    /**
+     * Checks if the character is moving
+     */
     checkAnimations(){
         setInterval( () => {          
-            if (!this.stopAllMovements) {
-                if (this.isDead && this.stopDeathLoop == false) {
-                    this.walking_sound.pause();
-                    this.speedY = 15;
-                    this.playAnimation(this.IMAGES_DEATH);
-                    this.stopDeathLoop = true;
-                } else if(this.isHurt(0.7)) {
-                    this.playAnimation(this.IMAGES_HURT);
-                } else {
-                    if (this.isAboveGround()) {
-                       this.playAnimation(this.IMAGES_JUMPING);
-                  } else {
-                      if (this.world.keyboard.RIGHT) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                     }
-                     if (this.world.keyboard.LEFT) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                     } else {
-                        if (this.idleTimer > 4 && this.idleTimer < 8) {
-                            this.playAnimation(this.IMAGES_SHORT_IDLE);
-                        } else {
-                            if (this.idleTimer >= 9) {
-                                this.playAnimation(this.IMAGES_LONG_IDLE);
-                            }
-                        }
-                     }
-                    }
-                }
-            } else {
+            if (this.stopAllMovements) {
                 this.walking_sound.pause();
+            } else {   
+                this.checkMovements();
             }          
         }, 1000 / 12);
     }
 
+    /**
+     * Checks the current status of the character (dead, moving etc.) and plays the according animations.
+     */
+    checkMovements(){
+        if (this.isDead && this.stopDeathLoop == false) {
+            this.triggerDeath();
+        } else if(this.isHurt(0.7)) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } 
+        
+        if (this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else {
+            this.checkIdle()
+        }
+    }
+
+    triggerDeath(){
+        this.walking_sound.pause();
+        this.speedY = 15;
+        this.playAnimation(this.IMAGES_DEATH);
+        this.stopDeathLoop = true;
+    }
+
+    checkIdle(){
+        if (this.idleTimer > 4 && this.idleTimer < 8) {
+            this.playAnimation(this.IMAGES_SHORT_IDLE);
+        } else if (this.idleTimer >= 9) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        }  
+    }
+
+    /**
+     * This is moving the character in the canvas and is playing audio at the same time.
+     */
     checkMovements(){
         setInterval( () => {
             if (!this.stopAllMovements) {
@@ -158,8 +174,7 @@ class Character extends MovableObject{
                 if (this.world.keyboard.UP && !this.isAboveGround()) {
                     this.world.checkAudioPlayback(this.jumping_sound);
                     this.jump();
-                }
-    
+                }   
                 this.world.camera_x = -this.x + 100;
             }
         }, 1000 / 60);
@@ -169,15 +184,20 @@ class Character extends MovableObject{
      * @param {number} idleTimer - Timer to check when the idle image loop should be started.
      * This function is used to check the time since the last time a button was pressed. Once per second @param idleTimer goes up by 1.
      */
-    checkIdle(){
+    countIdle(){
         setInterval(() => {
-        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {
-            
-                this.idleTimer++;
-       
-        } else {
-            this.idleTimer = 0;
-        }
-    }, 1000)
+            if (this.checkIdleTimerIncrease()) {           
+                this.idleTimer++;      
+            } else {
+                this.idleTimer = 0;
+            }
+        }, 1000)
+    }
+
+    checkIdleTimerIncrease(){
+    return  !this.world.keyboard.RIGHT && 
+            !this.world.keyboard.LEFT && 
+            !this.world.keyboard.UP && 
+            !this.world.keyboard.SPACE
     }
 }

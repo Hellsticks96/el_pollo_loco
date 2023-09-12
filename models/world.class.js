@@ -117,25 +117,24 @@ lastCallTime = 0;
      * Checks if a bottle is hitting a normal enemy or an endboss and starts according functions
      */
     checkBottleCollision(){
-            this.level.enemies.forEach((enemy) => {
-                for (let i = 0; i < this.throwableObject.length; i++) {
-                    const thrownBottle = this.throwableObject[i];                   
-                    if (thrownBottle.isColliding(enemy)) {
-                        this.bottleEnemyHit(enemy, thrownBottle)         
-                    };
+        this.level.enemies.forEach((enemy) => {
+            for (let i = 0; i < this.throwableObject.length; i++) {
+                const thrownBottle = this.throwableObject[i];                   
+                if (thrownBottle.isColliding(enemy)) {
+                    this.bottleEnemyHit(enemy, thrownBottle)         
                 };
-            });
-            if (this.level.endboss.length > 0 && !this.endboss.isHurt(0.8)) {
-                for (let i = 0; i < this.throwableObject.length; i++) {
-                    const thrownBottle = this.throwableObject[i];
-                    if (thrownBottle.isColliding(this.endboss)) {
-                        this.bottleEndbossHit(this.endboss, thrownBottle)
-                        this.checkEndbossStatusbar(this.endboss)                                              
-                    }
+            };
+        });
+        if (this.level.endboss.length > 0 && !this.endboss.isHurt(0.8)) {
+            for (let i = 0; i < this.throwableObject.length; i++) {
+                const thrownBottle = this.throwableObject[i];
+                if (thrownBottle.isColliding(this.endboss)) {
+                    this.bottleEndbossHit(this.endboss, thrownBottle)
+                    this.checkEndbossStatusbar(this.endboss)                                              
                 }
             }
-            
-        }
+        }            
+    }
 
         /**
          * 
@@ -380,22 +379,17 @@ lastCallTime = 0;
     draw(){
         if (!this.gamePaused) {
             this.ctx.fillRect(0, 0, 1080, 720);
-
             this.ctx.translate(this.camera_x, 0);
             this.grabAndAddAll();
             if (!this.gameOver) {
                 this.ctx.translate(-this.camera_x, 0);
                 this.addStaticObjects();
                 this.ctx.translate(this.camera_x, 0);
-            }
-            
-    
+            }                
             if (this.spawnCharacter) {
                 this.addToMap(this.character);
-            }
-  
-            this.ctx.translate(-this.camera_x, 0);
-    
+            }  
+            this.ctx.translate(-this.camera_x, 0);    
             let self = this;
             requestAnimationFrame(function(){
                 self.draw();
@@ -440,51 +434,51 @@ lastCallTime = 0;
         }
     }
 
-        /**
-         * 
-         * @param {Array} array - array of imgs
-         * Loops through array and adds all imgs to canvas
-         */
-        grabAndAdd(array){
-            array.forEach(item => {
-                this.addToMap(item);
-            })
-        }
+    /**
+     * 
+     * @param {Array} array - array of imgs
+     * Loops through array and adds all imgs to canvas
+     */
+    grabAndAdd(array){
+        array.forEach(item => {
+            this.addToMap(item);
+        });
+    }
         
-        /**
-         * 
-         * @param {Object} mo - object to draw
-         * This draws a single object on the canvas. It also checks whether the images should be flipped or not (walking other direction)
-         */
-        addToMap(mo){
-            if (mo.otherDirection) {
-                this.flipImage(mo);
-            }
-
-            mo.draw(this.ctx);
-
-            if (mo.otherDirection) {
-                this.resetImage(mo);
-            }
+    /**
+     * 
+     * @param {Object} mo - object to draw
+     * This draws a single object on the canvas. It also checks whether the images should be flipped or not (walking other direction)
+     */
+    addToMap(mo){
+        if (mo.otherDirection) {
+            this.flipImage(mo);
         }
 
-        /**
-         * 
-         * @param {object} mo - object images need to be flipped
-         * Flips images of objects
-         */
-        flipImage(mo){
-                this.ctx.save();
-                this.ctx.translate(mo.width, 0);
-                this.ctx.scale(-1, 1);
-                mo.x = mo.x * -1;
-        }
+        mo.draw(this.ctx);
 
-        /**
-         * Flips the image back to original
-         */
-        resetImage(mo){
-            mo.x = mo.x * -1;
-            this.ctx.restore();
-        }    
+        if (mo.otherDirection) {
+            this.resetImage(mo);
+        }
+    }
+
+    /**
+     * 
+     * @param {object} mo - object images need to be flipped
+     * Flips images of objects
+     */
+    flipImage(mo){
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+    /**
+     * Flips the image back to original
+     */
+    resetImage(mo){
+        mo.x = mo.x * -1;
+        this.ctx.restore();
+    }    
 }

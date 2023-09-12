@@ -126,7 +126,7 @@ canvas {
 
 /* Media queries */
 
-@media only screen and (min-width: 1190px), (min-height: 1001px){
+@media only screen and (min-width: 1190px) and (min-height: 1001px){
     .hide-large{
         display: none;
     }
@@ -138,11 +138,6 @@ canvas {
     }
 }
 
-@media only screen and (max-width: 1190px), (min-height:831px) {
-    .startscreen_endscreen{
-        object-fit: contain;
-    }
-}
 
 @media only screen and (min-height: 650px) and (max-height: 1050px) and (max-width: 400px){  
     .hide-phone-vertical {
@@ -185,14 +180,13 @@ canvas {
     canvas {
         width: 100%;
     }
+
+    .startscreen_endscreen{
+        object-fit: contain;
+    }
 }
 
 @media only screen and (max-height: 830px){
-
-    .startscreen_endscreen {
-        object-fit: initial;
-    }
-
     canvas {
         height: 100vh;
     }
