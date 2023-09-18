@@ -113,7 +113,7 @@ class Character extends MovableObject{
             if (this.stopAllMovements) {
                 this.walking_sound.pause();
             } else {   
-                this.checkMovements();
+                this.getAnimations();
             }          
         }, 1000 / 12);
     }
@@ -121,7 +121,7 @@ class Character extends MovableObject{
     /**
      * Checks the current status of the character (dead, moving etc.) and plays the according animations.
      */
-    checkMovements(){
+    getAnimations(){
         if (this.isDead && this.stopDeathLoop == false) {
             this.triggerDeath();
         } else if(this.isHurt(0.7)) {
@@ -191,7 +191,7 @@ class Character extends MovableObject{
             } else {
                 this.idleTimer = 0;
             }
-        }, 1000)
+    }, 1000)
     }
 
     checkIdleTimerIncrease(){

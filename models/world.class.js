@@ -320,13 +320,13 @@ lastCallTime = 0;
      * Checks if a bottle is thrown. This uses a timer that prevents it from beeing called continiously while a key is pressed
      */
     checkBottleThrow(){
-        if (this.keyboard.SPACE && this.timeSinceLastCall() && this.character_bottle_stash >= 10) {            
+        let bottle = new ThrowableObject(this.character.x + 120, this.character.y + 150);
+        if (this.keyboard.SPACE && this.timeSinceLastCall() && this.character_bottle_stash >= 10) {    
+            this.throwableObject.push(bottle);        
             this.timeNow = new Date().getTime();
-            let bottle = new ThrowableObject(this.character.x + 150, this.character.y + 180);
             if (this.character.otherDirection) {
                 bottle.otherDirection = true;
-            }            
-            this.throwableObject.push(bottle);
+            }
             this.checkAudioPlayback(bottle.throw_bottle_sound);
             bottle.throw();
             this.character_bottle_stash -= 10;
